@@ -1,20 +1,20 @@
 package hotelbookingsystem.utils;
 
 public class LinkedList<K, V> {
-    private Node<K, V> head;
+    private LinkedListNode<K, V> head;
 
     public LinkedList() {
         this.head = null;
     }
 
     public void add(K key, V value) {
-        Node<K, V> node = new Node<>(key, value);
+        LinkedListNode<K, V> node = new LinkedListNode<>(key, value);
         node.next = head;
         head = node;
     }
 
     public V get(K key) {
-        Node<K, V> node = head;
+        LinkedListNode<K, V> node = head;
         while (node != null) {
             if (node.key.equals(key)) {
                 return node.value;
@@ -31,7 +31,7 @@ public class LinkedList<K, V> {
             return;
         }
 
-        Node<K, V> node = head;
+        LinkedListNode<K, V> node = head;
         while (node.next != null) {
             if (node.next.key.equals(key)) {
                 node.next = node.next.next;
@@ -41,3 +41,5 @@ public class LinkedList<K, V> {
         }
     }
 }
+
+

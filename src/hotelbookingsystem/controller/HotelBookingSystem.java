@@ -78,17 +78,12 @@ public class HotelBookingSystem {
     String line;
     while ((line = reader.readLine()) != null) {
         String[] parts = line.split("\t");
-        Customer customer = new Customer();
-        customer.setLastName(parts[0]);
-        customer.setFirstName(parts[1]);
-        customer.setEmail(parts[2]);
-        customer.setGender(parts[3]);
-        customer.setPhoneNumber(parts[4]);
-        customer.setArrivalDate(parts[5]);
+        Customer customer = new Customer(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
         customerTable.put(customer);
     }
     reader.close();
 }
+
     public void loadRoomHistory(String filename) throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader(filename));
     String line;
