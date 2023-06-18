@@ -4,52 +4,98 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Reservation {
-    private Customer customer;
-    private int roomNumber;
-    private LocalDate arrivalDate;
-    private LocalDate departureDate;
+    private String customerCI;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String gender;
+    private String roomType;
+    private String phoneNumber;
+    private String arrivalDate;
+    private String departureDate;
 
-   public Reservation(String ci, String firstName, String lastName, String email, String gender, String roomType, String phoneNumber, String arrivalDate, String departureDate) {
-    this.customer = new Customer(firstName, lastName, email, gender, phoneNumber);
-    this.roomNumber = Integer.parseInt(roomType); // Assuming roomType is the room number
-    this.arrivalDate = LocalDate.parse(arrivalDate, DateTimeFormatter.ofPattern("d/MM/yyyy"));
-    this.departureDate = LocalDate.parse(departureDate, DateTimeFormatter.ofPattern("d/MM/yyyy"));
-}
+    // Getters and setters for each field
+private String roomNumber;
 
+    // ...otros getters y setters...
 
-    
-public String getCustomerCI() {
-        return this.customer.getCI();
-    }
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public int getRoomNumber() {
+    public String getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
     }
+    public String getCustomerCI() {
+        return customerCI;
+    }
 
-    public LocalDate getArrivalDate() {
+    public void setCustomerCI(String customerCI) {
+        this.customerCI = customerCI;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(LocalDate arrivalDate) {
+    public void setArrivalDate(String arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 
-    public LocalDate getDepartureDate() {
+    public String getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(LocalDate departureDate) {
+    public void setDepartureDate(String departureDate) {
         this.departureDate = departureDate;
     }
 }
+

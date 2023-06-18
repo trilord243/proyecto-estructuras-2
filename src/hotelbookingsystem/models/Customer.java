@@ -1,25 +1,15 @@
 package  hotelbookingsystem.models;
 
 public class Customer {
-    private String ci;
     private String firstName;
     private String lastName;
     private String email;
     private String gender;
     private String phoneNumber;
+    private String arrivalDate;
 
-    public Customer(String firstName, String lastName, String email, String gender, String phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-    }
+    // Getters and setters for each field
 
-    
-     public String getCI() {
-        return this.ci;
-    }
     public String getFirstName() {
         return firstName;
     }
@@ -59,4 +49,13 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
 }
+

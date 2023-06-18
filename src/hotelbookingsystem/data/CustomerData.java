@@ -19,8 +19,6 @@ public class CustomerData {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-       
-                // El csv tendra este formato :firstName,lastName,email,gender,phoneNumber
                 String firstName = parts[0];
                 String lastName = parts[1];
                 String email = parts[2];

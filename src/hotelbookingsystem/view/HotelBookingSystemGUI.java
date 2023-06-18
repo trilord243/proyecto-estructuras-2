@@ -8,6 +8,6 @@ package hotelbookingsystem.view;
  *
  * @author Escal
  */
-public class MainView {
+public class HotelBookingSystemGUI {
     
 }

@@ -1,18 +1,17 @@
-// ReservationData.java
 package hotelbookingsystem.data;
 
 import hotelbookingsystem.models.Reservation;
 import hotelbookingsystem.utils.BinarySeachTree;
-
+import hotelbookingsystem.utils.ReservationNode;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class ReservationData {
-    private BinarySeachTree<Reservation> reservations;
+    private BinarySeachTree reservations;
 
     public ReservationData() {
-        reservations = new BinarySeachTree<>();
+        reservations = new BinarySeachTree();
     }
 
     public void loadReservationData(String filename) {
@@ -20,8 +19,7 @@ public class ReservationData {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                // Assuming the CSV file has the format: ci,firstName,lastName,email,gender,roomType,phoneNumber,arrivalDate,departureDate
-                String ci = parts[0];
+                Integer ci = Integer.parseInt(parts[0]);
                 String firstName = parts[1];
                 String lastName = parts[2];
                 String email = parts[3];
@@ -30,15 +28,17 @@ public class ReservationData {
                 String phoneNumber = parts[6];
                 String arrivalDate = parts[7];
                 String departureDate = parts[8];
-                Reservation reservation = new Reservation(ci, firstName, lastName, email, gender, roomType, phoneNumber, arrivalDate, departureDate);
-                reservations.put(reservation);
+                Reservation reservation = new Reservation(ci.toString(), firstName, lastName, email, gender, roomType, phoneNumber, arrivalDate, departureDate);
+                ReservationNode reservationNode = new ReservationNode(ci, reservation);
+                reservations.put(reservationNode);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Reservation getReservationByCI(String ci) {
-        return reservations.get(new Reservation(ci));
+    public Reservation getReservationByCI(Integer ci) {
+        ReservationNode reservationNode = reservations.get(ci);
+        return reservationNode != null ? reservationNode.getReservation() : null;
     }
 }
