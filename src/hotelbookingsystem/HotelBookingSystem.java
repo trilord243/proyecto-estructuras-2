@@ -8,7 +8,7 @@ package hotelbookingsystem;
  *
  * @author Escal
  */
-public class Main {
+public class HotelBookingSystem {
 
     /**
      * @param args the command line arguments
