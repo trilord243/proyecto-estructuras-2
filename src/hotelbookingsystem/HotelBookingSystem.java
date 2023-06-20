@@ -4,6 +4,9 @@
  */
 package hotelbookingsystem;
 
+import hotelbookingsystem.data.CustomerData;
+import hotelbookingsystem.utils.HashTable;
+
 /**
  *
  * @author Escal
@@ -14,7 +17,20 @@ public class HotelBookingSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-    }
+        CustomerData customerdata = new CustomerData();
+
+        HashTable habitaciones = customerdata.getHabitaciones();
+
+        String fullname = "Tobiah Sneaker";
+        if (habitaciones.get(fullname)==null){
+            System.out.println(fullname +"'s room does not exist, contact customer service.");
+        }
+        else{
+            System.out.println(fullname +"'s room is number: " + habitaciones.get(fullname)+".");
+        }
+        
     
+    }
 }
+    
+
