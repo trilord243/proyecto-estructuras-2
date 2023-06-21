@@ -6,6 +6,8 @@ package hotelbookingsystem;
 
 import hotelbookingsystem.data.CustomerData;
 import hotelbookingsystem.utils.HashTable;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -16,12 +18,17 @@ public class HotelBookingSystem {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         CustomerData customerdata = new CustomerData();
-
         HashTable habitaciones = customerdata.getHabitaciones();
+        
+        Scanner scanner = new Scanner(System.in);
+        String fullname;
 
-        String fullname = "Tobiah Sneaker";
+        System.out.println("Enter the guest´s fullname to search for the room:");
+        fullname = scanner.nextLine();
+
         if (habitaciones.get(fullname)==null){
             System.out.println(fullname +"'s room does not exist, contact customer service.");
         }
