@@ -4,6 +4,10 @@
  */
 package hotelbookingsystem.view;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Escal
@@ -40,7 +44,7 @@ public class Mainview extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        addClient = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -114,15 +118,15 @@ public class Mainview extends javax.swing.JFrame {
         jButton2.setBorder(null);
         jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, 130, 120));
 
-        jButton3.setBackground(new java.awt.Color(230, 230, 230));
-        jButton3.setForeground(new java.awt.Color(230, 230, 230));
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        addClient.setBackground(new java.awt.Color(230, 230, 230));
+        addClient.setForeground(new java.awt.Color(230, 230, 230));
+        addClient.setBorder(null);
+        addClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                addClientActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 130, 120));
+        jPanel3.add(addClient, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 130, 120));
 
         jButton4.setBackground(new java.awt.Color(230, 230, 230));
         jButton4.setForeground(new java.awt.Color(230, 230, 230));
@@ -149,9 +153,28 @@ public class Mainview extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientActionPerformed
+         String num_hab = JOptionPane.showInputDialog(this, "Ingrese el número de habitación");
+    String primer_nombre = JOptionPane.showInputDialog(this, "Ingrese el primer nombre");
+    String apellido = JOptionPane.showInputDialog(this, "Ingrese el apellido");
+    String email = JOptionPane.showInputDialog(this, "Ingrese el email");
+    String genero = JOptionPane.showInputDialog(this, "Ingrese el género");
+    String celular = JOptionPane.showInputDialog(this, "Ingrese el número de celular");
+    String llegada = JOptionPane.showInputDialog(this, "Ingrese la fecha de llegada en formato dd/mm/yyyy");
+
+    String clientInfo = String.join(",", num_hab, primer_nombre, apellido, email, genero, celular, llegada) + "\n";
+
+    try {
+        // Usamos el flag "true" en FileWriter para agregar información en lugar de sobrescribir.
+        FileWriter writer = new FileWriter("Booking_hotel - estado.csv", true);
+        writer.write(clientInfo);
+        writer.close();
+        JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la información del cliente");
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_addClientActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,8 +212,8 @@ public class Mainview extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addClient;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
