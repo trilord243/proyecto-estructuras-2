@@ -4,7 +4,8 @@
  */
 package hotelbookingsystem;
 
-import hotelbookingsystem.data.CustomerData;
+
+import hotelbookingsystem.utils.CustomerData;
 import hotelbookingsystem.utils.HashTable;
 import java.util.Scanner;
 import java.util.regex.Pattern;
