@@ -16,9 +16,7 @@ import hotelbookingsystem.utils.HashTable;
  * @author Escal
  */
 public class HotelBookingSystem {
-    
-    
-    
+
     public static void main(String[] args) {
         //precargar la informacion de los hospedados
         //CustomerData customerdata = new CustomerData();
@@ -28,6 +26,7 @@ public class HotelBookingSystem {
         
         ReservationData reservationdata = new ReservationData();
     }
+
 }
     
 
