@@ -31,8 +31,8 @@ public class CustomerData {
                 String[] valores = linea.split(",");
 
                 String habitacion = valores[0].trim();
-                String nombre = valores[1].trim();
-                String apellido = valores[2].trim();
+                String nombre = valores[1].trim().toUpperCase();
+                String apellido = valores[2].trim().toUpperCase();
 
                 // Verificar si el número de habitación está vacío y omitir el cliente
                 if (habitacion.isEmpty()) {
