@@ -11,9 +11,9 @@ public class HashTable<K, V> {
             array[i] = new LinkedList<>();
         }
     }
-
+    //puse Math.abs para que no de resultados negativos (Ej. Index -99 out of bounds for length 300)
     private int getHash(K key) {
-        return key.hashCode() % size;
+        return Math.abs(key.hashCode() % size);
     }
 
     public void put(K key, V value) {
