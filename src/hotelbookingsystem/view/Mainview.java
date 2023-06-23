@@ -4,8 +4,12 @@
  */
 package hotelbookingsystem.view;
 
+import com.toedter.calendar.JDateChooser;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -154,25 +158,105 @@ public class Mainview extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientActionPerformed
-         String num_hab = JOptionPane.showInputDialog(this, "Ingrese el número de habitación");
-    String primer_nombre = JOptionPane.showInputDialog(this, "Ingrese el primer nombre");
-    String apellido = JOptionPane.showInputDialog(this, "Ingrese el apellido");
-    String email = JOptionPane.showInputDialog(this, "Ingrese el email");
-    String genero = JOptionPane.showInputDialog(this, "Ingrese el género");
-    String celular = JOptionPane.showInputDialog(this, "Ingrese el número de celular");
-    String llegada = JOptionPane.showInputDialog(this, "Ingrese la fecha de llegada en formato dd/mm/yyyy");
+    String ci = null;
+    do {
+        ci = JOptionPane.showInputDialog(this, "Ingrese la cédula del cliente");
+        if (ci == null) return; // Si el usuario presiona cancelar
+        if (!ci.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "La cédula debe ser numérica.");
+        } else {
+            break;
+        }
+    } while (true);
 
-    String clientInfo = String.join(",", num_hab, primer_nombre, apellido, email, genero, celular, llegada) + "\n";
+    String primer_nombre = JOptionPane.showInputDialog(this, "Ingrese el primer nombre");
+    String segundo_nombre = JOptionPane.showInputDialog(this, "Ingrese el segundo nombre");
+
+    String email = null;
+    do {
+        email = JOptionPane.showInputDialog(this, "Ingrese el email");
+        if (email == null) return; // Si el usuario presiona cancelar
+        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            JOptionPane.showMessageDialog(this, "El correo electrónico es inválido.");
+        } else {
+            break;
+        }
+    } while (true);
+
+    Object[] generos = {"Masculino", "Femenino"};
+    String genero = (String) JOptionPane.showInputDialog(null, "Seleccione el género", 
+        "Género", JOptionPane.QUESTION_MESSAGE, null, generos, generos[0]);
+
+    Object[] tipos_hab = {"doble", "simple", "suite"};
+    String tipo_hab = (String) JOptionPane.showInputDialog(null, "Seleccione el tipo de habitación", 
+        "Tipo de Habitación", JOptionPane.QUESTION_MESSAGE, null, tipos_hab, tipos_hab[0]);
+
+    String celular = JOptionPane.showInputDialog(this, "Ingrese el número de celular");
+
+    String llegada = null;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    do {
+        JDateChooser jd = new JDateChooser();
+        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
+        llegada = sdf.format(jd.getDate());
+        if (llegada == null) return; // Si el usuario presiona cancelar
+        if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+            JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
+        } else {
+            break;
+        }
+    } while (true);
+
+    // Lo mismo para la fecha de salida, reutilizando el mismo formato de fecha.
+    String salida = null;
+    do {
+        JDateChooser jd = new JDateChooser();
+        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
+        salida = sdf.format(jd.getDate());
+        if (salida == null) return; // Si el usuario presiona cancelar
+        if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+            JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
+        } else {
+            break;
+        }
+    } while (true);
+
+    String clientInfo = String.join(",", ci, primer_nombre, segundo_nombre, email, genero, tipo_hab, celular, llegada, salida) + "\n";
+
+    String csvFile = "Booking_hotel - reservas.csv";
+    BufferedReader br = null;
+    String line = "";
+    String cvsSplitBy = ",";
 
     try {
+        br = new BufferedReader(new FileReader(csvFile));
+        while ((line = br.readLine()) != null) {
+            // Usamos coma como separador
+            String[] client = line.split(cvsSplitBy);
+
+            // Verificamos si el cliente ya está registrado
+            if (client[0].equals(ci)) {
+                JOptionPane.showMessageDialog(this, "Este cliente ya está registrado");
+                return;
+            }
+        }
+
         // Usamos el flag "true" en FileWriter para agregar información en lugar de sobrescribir.
-        FileWriter writer = new FileWriter("Booking_hotel - estado.csv", true);
+        FileWriter writer = new FileWriter(csvFile, true);
         writer.write(clientInfo);
         writer.close();
         JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la información del cliente");
         e.printStackTrace();
+    } finally {
+        if (br != null) {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     }//GEN-LAST:event_addClientActionPerformed
 
