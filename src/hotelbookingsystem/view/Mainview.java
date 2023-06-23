@@ -6,7 +6,9 @@ package hotelbookingsystem.view;
 
 import com.toedter.calendar.JDateChooser;
 import hotelbookingsystem.data.ControllerCsv;
+import hotelbookingsystem.data.CustomerData;
 import hotelbookingsystem.models.Customer;
+import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.utils.HashTable;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,6 +30,7 @@ public class Mainview extends javax.swing.JFrame {
      */
     public Mainview() {
         initComponents();
+        
 
 
 
@@ -67,7 +70,7 @@ public class Mainview extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         addClient = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Boton_Prop_1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -211,10 +214,15 @@ public class Mainview extends javax.swing.JFrame {
         });
         jPanel3.add(addClient, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 130, 120));
 
-        jButton4.setBackground(new java.awt.Color(230, 230, 230));
-        jButton4.setForeground(new java.awt.Color(230, 230, 230));
-        jButton4.setBorder(null);
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 120));
+        Boton_Prop_1.setBackground(new java.awt.Color(230, 230, 230));
+        Boton_Prop_1.setForeground(new java.awt.Color(230, 230, 230));
+        Boton_Prop_1.setBorder(null);
+        Boton_Prop_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_Prop_1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Boton_Prop_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 120));
 
         jButton5.setBackground(new java.awt.Color(230, 230, 230));
         jButton5.setForeground(new java.awt.Color(230, 230, 230));
@@ -363,6 +371,12 @@ try {
         }
     }
     }//GEN-LAST:event_addClientActionPerformed
+    CustomerData customerdata = new CustomerData();
+    private void Boton_Prop_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_Prop_1ActionPerformed
+        
+        HashTable habitaciones = customerdata.getHabitaciones();
+        Status(habitaciones);
+    }//GEN-LAST:event_Boton_Prop_1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -400,9 +414,9 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Boton_Prop_1;
     private javax.swing.JButton addClient;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

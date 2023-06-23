@@ -25,8 +25,10 @@ public class HotelBookingSystem {
 //        HashTable habitaciones = customerdata.getHabitaciones();
         //mandar a Status la hashtable de habitaciones donde nos dira si el huesped esta hospedado en el holtel actualmente
 //        Status(habitaciones);
-//        
 //        ReservationData reservationdata = new ReservationData();
+        
+        Mainview interfaz = new Mainview();
+        interfaz.setVisible(true);
         
     }
 

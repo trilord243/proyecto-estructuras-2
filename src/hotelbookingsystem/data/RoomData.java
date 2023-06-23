@@ -13,13 +13,13 @@ import java.util.Scanner;
  *
  * @author Escal
  */
-public class RoomData {
+//public class RoomData {
 
-    public class CVSReader {
+    //public class CVSReader {
 
-        public static void main(String[] args) {
+        /*public static void main(String[] args) {
 
-            String path = "C:\\Users\\Gabriel Mena\\Documents\\Booking - Historico.csv";
+            String path = "Booking_hotel - Histórico.csv";
 
             Scanner scan_user = new Scanner(System.in);
             System.out.println("Ingrese el numero de habitacion que quiere saber su historial: ");
@@ -95,4 +95,4 @@ public class RoomData {
 
     }
 
-}
+}*/
