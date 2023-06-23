@@ -6,7 +6,7 @@ package hotelbookingsystem;
 
 import hotelbookingsystem.data.CustomerData;
 import hotelbookingsystem.data.ReservationData;
-import static hotelbookingsystem.model.Customer.Status;
+import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.utils.HashTable;
 
 
@@ -21,10 +21,10 @@ public class HotelBookingSystem {
     
     public static void main(String[] args) {
         //precargar la informacion de los hospedados
-        //CustomerData customerdata = new CustomerData();
-        //HashTable habitaciones = customerdata.getHabitaciones();
+        CustomerData customerdata = new CustomerData();
+        HashTable habitaciones = customerdata.getHabitaciones();
         //mandar a Status la hashtable de habitaciones donde nos dira si el huesped esta hospedado en el holtel actualmente
-        //Status(habitaciones);
+        Status(habitaciones);
         
         ReservationData reservationdata = new ReservationData();
     }
