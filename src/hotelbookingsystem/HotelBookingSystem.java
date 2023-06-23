@@ -17,9 +17,7 @@ import hotelbookingsystem.view.Mainview;
  * @author Escal
  */
 public class HotelBookingSystem {
-    
-    
-    
+
     public static void main(String[] args) {
         
         //precargar la informacion de los hospedados
@@ -31,6 +29,7 @@ public class HotelBookingSystem {
 //        ReservationData reservationdata = new ReservationData();
         
     }
+
 }
     
 
