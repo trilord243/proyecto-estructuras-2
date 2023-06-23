@@ -5,6 +5,9 @@
 package hotelbookingsystem.view;
 
 import com.toedter.calendar.JDateChooser;
+import hotelbookingsystem.data.ControllerCsv;
+import hotelbookingsystem.models.Customer;
+import hotelbookingsystem.utils.HashTable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,12 +20,17 @@ import javax.swing.JOptionPane;
  * @author Escal
  */
 public class Mainview extends javax.swing.JFrame {
+    HashTable<String, Customer> customerTable = new HashTable<>(1200); // Un 20% más grande que el número esperado de clientes
+
 
     /**
      * Creates new form Mainview
      */
     public Mainview() {
         initComponents();
+
+
+
     }
 
     /**
@@ -158,16 +166,45 @@ public class Mainview extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientActionPerformed
-    String ci = null;
+  String csvFile = "Booking_hotel - reservas.csv";
+String ci = null;
+String line = "";
+String cvsSplitBy = ",";
+
+BufferedReader br = null;
+try {
+    br = new BufferedReader(new FileReader(csvFile));
     do {
         ci = JOptionPane.showInputDialog(this, "Ingrese la cédula del cliente");
         if (ci == null) return; // Si el usuario presiona cancelar
         if (!ci.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "La cédula debe ser numérica.");
         } else {
+            while ((line = br.readLine()) != null) {
+                // Usamos coma como separador
+                String[] client = line.split(cvsSplitBy);
+
+                // Verificamos si el cliente ya está registrado
+                if (client[0].replace(".", "").equals(ci)) {
+                    JOptionPane.showMessageDialog(this, "Ya existe un cliente con esa cédula");
+                    return;
+                }
+            }
             break;
         }
     } while (true);
+} catch (IOException e) {
+    JOptionPane.showMessageDialog(this, "Ocurrió un error al buscar la cédula");
+    e.printStackTrace();
+} finally {
+    if (br != null) {
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
     String primer_nombre = JOptionPane.showInputDialog(this, "Ingrese el primer nombre");
     String segundo_nombre = JOptionPane.showInputDialog(this, "Ingrese el segundo nombre");
@@ -183,9 +220,7 @@ public class Mainview extends javax.swing.JFrame {
         }
     } while (true);
 
-    Object[] generos = {"Masculino", "Femenino"};
-    String genero = (String) JOptionPane.showInputDialog(null, "Seleccione el género", 
-        "Género", JOptionPane.QUESTION_MESSAGE, null, generos, generos[0]);
+ String genero = JOptionPane.showInputDialog(this, "Ingrese el genero");
 
     Object[] tipos_hab = {"doble", "simple", "suite"};
     String tipo_hab = (String) JOptionPane.showInputDialog(null, "Seleccione el tipo de habitación", 
@@ -223,10 +258,7 @@ public class Mainview extends javax.swing.JFrame {
 
     String clientInfo = String.join(",", ci, primer_nombre, segundo_nombre, email, genero, tipo_hab, celular, llegada, salida) + "\n";
 
-    String csvFile = "Booking_hotel - reservas.csv";
-    BufferedReader br = null;
-    String line = "";
-    String cvsSplitBy = ",";
+
 
     try {
         br = new BufferedReader(new FileReader(csvFile));
