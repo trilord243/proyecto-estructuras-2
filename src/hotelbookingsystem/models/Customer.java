@@ -4,12 +4,15 @@ import hotelbookingsystem.utils.HashTable;
 import java.util.Scanner;
 
 public class Customer {
+    private int ci;
     private String firstName;
     private String lastName;
     private String email;
     private String gender;
     private String phoneNumber;
     private String arrivalDate;
+    private String exitDate;
+    
 
     // Getters and setters for each field
 
@@ -23,6 +26,22 @@ public class Customer {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public int getCi() {
+        return ci;
+    }
+
+    public void setCi(int ci) {
+        this.ci = ci;
+    }
+
+    public String getExitDate() {
+        return exitDate;
+    }
+
+    public void setExitDate(String exitDate) {
+        this.exitDate = exitDate;
     }
 
     public void setLastName(String lastName) {

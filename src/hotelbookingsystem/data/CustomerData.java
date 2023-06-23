@@ -11,6 +11,9 @@ package hotelbookingsystem.data;
 import hotelbookingsystem.utils.HashTable;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CustomerData {
@@ -50,4 +53,6 @@ public class CustomerData {
     public HashTable getHabitaciones() {
         return habitaciones;
     }
+
+
 }
