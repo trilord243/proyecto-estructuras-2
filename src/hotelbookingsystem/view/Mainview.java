@@ -7,7 +7,10 @@ package hotelbookingsystem.view;
 import com.toedter.calendar.JDateChooser;
 import hotelbookingsystem.data.ControllerCsv;
 import hotelbookingsystem.models.Customer;
+import hotelbookingsystem.utils.BinarySeachTree;
 import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.utils.LinkedList;
+import hotelbookingsystem.utils.ListNode;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,14 +23,74 @@ import javax.swing.JOptionPane;
  * @author Escal
  */
 public class Mainview extends javax.swing.JFrame {
-    HashTable<String, Customer> customerTable = new HashTable<>(1200); // Un 20% más grande que el número esperado de clientes
+    HashTable<String, Customer> customerTable = new HashTable<>(1200);
+    BinarySeachTree<Integer, LinkedList<Customer>> tree;
+
+
 
 
     /**
      * Creates new form Mainview
      */
+    
+    
+    
+    
+    
+    
+    
+public void loadData(BinarySeachTree<Integer, LinkedList<Customer>> tree) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("Booking_hotel - historico.csv"));
+    String line;
+    
+    // Saltar la primera línea
+    br.readLine();
+    
+    while ((line = br.readLine()) != null) {
+        String[] values = line.split(",");
+        int ci = Integer.parseInt(values[0].replace(".", "")); // quitamos los puntos
+        String firstName = values[1];
+        String lastName = values[2];
+        String email = values[3];
+        String gender = values[4];
+        String arrivalDate = values[5];
+        int roomNumber = Integer.parseInt(values[6]);
+
+        Customer customer = new Customer();
+        customer.setCi(ci);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        customer.setGender(gender);
+        customer.setArrivalDate(arrivalDate);
+
+        LinkedList<Customer> customers = tree.get(roomNumber);
+        if (customers == null) {
+            customers = new LinkedList<>();
+            tree.put(roomNumber, customers);
+        }
+        customers.append(customer);
+    }
+    br.close();
+}
+
+
+
+
+    
+    
+    
+    
+    
+    
     public Mainview() {
         initComponents();
+        tree = new BinarySeachTree<>();  // Inicializamos el árbol
+        try {
+        loadData(tree); 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 
 
 
@@ -65,7 +128,7 @@ public class Mainview extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        historialButton = new javax.swing.JButton();
         addClient = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -196,10 +259,15 @@ public class Mainview extends javax.swing.JFrame {
         jLabel17.setText("Agregar reserva");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(230, 230, 230));
-        jButton2.setForeground(new java.awt.Color(230, 230, 230));
-        jButton2.setBorder(null);
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, 130, 120));
+        historialButton.setBackground(new java.awt.Color(230, 230, 230));
+        historialButton.setForeground(new java.awt.Color(230, 230, 230));
+        historialButton.setBorder(null);
+        historialButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historialButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(historialButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, 130, 120));
 
         addClient.setBackground(new java.awt.Color(230, 230, 230));
         addClient.setForeground(new java.awt.Color(230, 230, 230));
@@ -237,6 +305,15 @@ public class Mainview extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+
+
+    
+    
+    
+    
+    
     private void addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientActionPerformed
   String csvFile = "Booking_hotel - reservas.csv";
 String ci = null;
@@ -364,6 +441,36 @@ try {
     }
     }//GEN-LAST:event_addClientActionPerformed
 
+    private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
+        String roomNumberString = null;
+    do {
+        roomNumberString = JOptionPane.showInputDialog(this, "Ingrese el número de la habitación");
+        if (roomNumberString == null) return; // Si el usuario presiona cancelar
+        if (!roomNumberString.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El número de habitación debe ser numérico.");
+        } else {
+            break;
+        }
+    } while (true);
+    Integer roomNumber = Integer.parseInt(roomNumberString);
+
+    LinkedList guests = tree.get(roomNumber);
+
+    if (guests == null) {
+        JOptionPane.showMessageDialog(this, "No hay historial para esta habitación.");
+    } else {
+        StringBuilder guestList = new StringBuilder();
+        ListNode node = guests.getHead();
+
+        while (node != null) {
+            guestList.append(node.getData()).append("\n");
+            node = node.getNext();
+        }
+
+        JOptionPane.showMessageDialog(this, "Los clientes que se han alojado en esta habitación son:\n" + guestList.toString());
+    }
+    }//GEN-LAST:event_historialButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -401,7 +508,7 @@ try {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClient;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton historialButton;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

@@ -76,5 +76,11 @@ public class Customer {
     public void setArrivalDate(String arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
+    
+    
+     public String toString() {
+        return firstName + " " + lastName + ", CI: " + ci;
+    }
+
 }
 
