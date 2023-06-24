@@ -1,4 +1,5 @@
-# proyecto-estructuras-2
+# Proyecto estructuras.
+
 Segundo proyecto de estrucutra de datos. que es la representación de arboles binarios y de Hashtables con la entradas de un hotel
 
 1. Registro de clientes. El usuario podrá conocer los clientes que actualmente se encuentran hospedados en el hotel; para lo cual se deberá introducir el apellido del cliente y el nombre, para luego obtener el número de la habitación en la que se encuentra alojado. La solución para tal requerimiento deberá tener una complejidad en tiempo lo más cercano posible a O(1). 
