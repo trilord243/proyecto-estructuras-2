@@ -27,6 +27,8 @@ public class Mainview extends javax.swing.JFrame {
     HashTable<String, Customer> customerTable = new HashTable<>(1200);
     BinarySeachTree<Integer, LinkedList<Customer>> tree;
     BinarySeachTree<Integer, Reservation> reservationTree = new BinarySeachTree<>();
+    HashTable<String, String> clients = new HashTable<>(1100);
+
 
 
 
@@ -363,37 +365,26 @@ public void loadReservationData() throws IOException {
     
     
     private void addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientActionPerformed
-  String csvFile = "Booking_hotel - reservas.csv";
-String ci = null;
-String line = "";
-String cvsSplitBy = ",";
+ String csvFile = "Booking_hotel - reservas.csv";
+  String ci = null;
+  String line = "";
+  String cvsSplitBy = ",";
 
-BufferedReader br = null;
-try {
+  // Cargar los clientes existentes en la Hashtable
+  BufferedReader br = null;
+  try {
     br = new BufferedReader(new FileReader(csvFile));
-    do {
-        ci = JOptionPane.showInputDialog(this, "Ingrese la cédula del cliente");
-        if (ci == null) return; // Si el usuario presiona cancelar
-        if (!ci.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "La cédula debe ser numérica.");
-        } else {
-            while ((line = br.readLine()) != null) {
-                // Usamos coma como separador
-                String[] client = line.split(cvsSplitBy);
+        br = new BufferedReader(new FileReader(csvFile));
+    while ((line = br.readLine()) != null) {
+        String[] clientData = line.split(",");
+        String ciNoDots = clientData[0].replace(".", ""); // Eliminar los puntos
+        clients.put(ciNoDots, line);
+    }
 
-                // Verificamos si el cliente ya está registrado
-                if (client[0].replace(".", "").equals(ci)) {
-                    JOptionPane.showMessageDialog(this, "Ya existe un cliente con esa cédula");
-                    return;
-                }
-            }
-            break;
-        }
-    } while (true);
-} catch (IOException e) {
+  } catch (IOException e) {
     JOptionPane.showMessageDialog(this, "Ocurrió un error al buscar la cédula");
     e.printStackTrace();
-} finally {
+  } finally {
     if (br != null) {
         try {
             br.close();
@@ -401,7 +392,23 @@ try {
             e.printStackTrace();
         }
     }
-}
+  }
+
+  // Registrar al nuevo cliente
+  do {
+    ci = JOptionPane.showInputDialog(this, "Ingrese la cédula del cliente");
+    if (ci == null) return; // Si el usuario presiona cancelar
+    if (!ci.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "La cédula debe ser numérica.");
+    } else {
+        // Verificar si el cliente ya está registrado
+        if (clients.get(ci) != null) {
+            JOptionPane.showMessageDialog(this, "Ya existe un cliente con esa cédula");
+            return;
+        }
+        break;
+    }
+  } while (true);
 
     String primer_nombre = JOptionPane.showInputDialog(this, "Ingrese el primer nombre");
     String segundo_nombre = JOptionPane.showInputDialog(this, "Ingrese el segundo nombre");
@@ -454,6 +461,7 @@ try {
     } while (true);
 
     String clientInfo = String.join(",", ci, primer_nombre, segundo_nombre, email, genero, tipo_hab, celular, llegada, salida) + "\n";
+   clients.put(ci, clientInfo);
 
 
 
