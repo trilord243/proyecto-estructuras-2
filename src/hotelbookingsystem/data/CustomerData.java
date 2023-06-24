@@ -44,7 +44,7 @@ public class CustomerData {
 
                 String nombreCompleto = nombre + " " + apellido;
                 habitaciones.put(nombreCompleto, habitacion);
-                System.out.println(nombreCompleto + " " + habitacion);
+                //System.out.println(nombreCompleto + " " + habitacion);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
