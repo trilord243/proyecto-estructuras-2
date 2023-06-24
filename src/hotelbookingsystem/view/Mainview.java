@@ -128,16 +128,8 @@ public void loadReservationData() throws IOException {
     public Mainview() {
         initComponents();
         tree = new BinarySeachTree<>();  // Inicializamos el árbol
-        try {
-        loadData(tree); 
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-   try {
-        loadReservationData(); 
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+  
+  
 
 
     }
@@ -178,8 +170,8 @@ public void loadReservationData() throws IOException {
         addClient = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         busquedaRerservacion = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        checkOut = new javax.swing.JButton();
+        checkIn = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -340,15 +332,20 @@ public void loadReservationData() throws IOException {
         });
         jPanel3.add(busquedaRerservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 120));
 
-        jButton6.setBackground(new java.awt.Color(230, 230, 230));
-        jButton6.setForeground(new java.awt.Color(230, 230, 230));
-        jButton6.setBorder(null);
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, 130, 120));
+        checkOut.setBackground(new java.awt.Color(230, 230, 230));
+        checkOut.setForeground(new java.awt.Color(230, 230, 230));
+        checkOut.setBorder(null);
+        jPanel3.add(checkOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, 130, 120));
 
-        jButton7.setBackground(new java.awt.Color(230, 230, 230));
-        jButton7.setForeground(new java.awt.Color(230, 230, 230));
-        jButton7.setBorder(null);
-        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 130, 120));
+        checkIn.setBackground(new java.awt.Color(230, 230, 230));
+        checkIn.setForeground(new java.awt.Color(230, 230, 230));
+        checkIn.setBorder(null);
+        checkIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkInActionPerformed(evt);
+            }
+        });
+        jPanel3.add(checkIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 130, 120));
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 356, -1, 20));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 610));
@@ -493,6 +490,14 @@ try {
     }//GEN-LAST:event_addClientActionPerformed
 
     private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
+        
+              try {
+        loadData(tree); 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+        
+        
         String roomNumberString = null;
     do {
         roomNumberString = JOptionPane.showInputDialog(this, "Ingrese el número de la habitación");
@@ -523,7 +528,15 @@ try {
     }//GEN-LAST:event_historialButtonActionPerformed
 
     private void busquedaRerservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaRerservacionActionPerformed
-         String ciString = null;
+        
+         try {
+        loadReservationData(); 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+        
+        
+        String ciString = null;
     do {
         ciString = JOptionPane.showInputDialog(this, "Ingrese la cédula de identidad");
         if (ciString == null) return;
@@ -543,6 +556,10 @@ try {
         JOptionPane.showMessageDialog(this, reservation.toString());
     }
     }//GEN-LAST:event_busquedaRerservacionActionPerformed
+
+    private void checkInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkInActionPerformed
 
     /**
      * @param args the command line arguments
@@ -582,10 +599,10 @@ try {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClient;
     private javax.swing.JButton busquedaRerservacion;
+    private javax.swing.JButton checkIn;
+    private javax.swing.JButton checkOut;
     private javax.swing.JButton historialButton;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
