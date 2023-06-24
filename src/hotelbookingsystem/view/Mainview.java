@@ -7,6 +7,7 @@ package hotelbookingsystem.view;
 import com.toedter.calendar.JDateChooser;
 import hotelbookingsystem.data.ControllerCsv;
 import hotelbookingsystem.models.Customer;
+import hotelbookingsystem.models.Reservation;
 import hotelbookingsystem.utils.BinarySeachTree;
 import hotelbookingsystem.utils.HashTable;
 import hotelbookingsystem.utils.LinkedList;
@@ -25,6 +26,8 @@ import javax.swing.JOptionPane;
 public class Mainview extends javax.swing.JFrame {
     HashTable<String, Customer> customerTable = new HashTable<>(1200);
     BinarySeachTree<Integer, LinkedList<Customer>> tree;
+    BinarySeachTree<Integer, Reservation> reservationTree = new BinarySeachTree<>();
+
 
 
 
@@ -75,6 +78,45 @@ public void loadData(BinarySeachTree<Integer, LinkedList<Customer>> tree) throws
 }
 
 
+public void loadReservationData() throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("Booking_hotel - reservas.csv"));
+    String line;
+    boolean isFirstLine = true; // variable para controlar la primera línea (encabezado)
+    while ((line = br.readLine()) != null) {
+        
+        if (isFirstLine) {
+            isFirstLine = false; // Si es la primera línea (encabezado), se omite
+            continue;
+        }
+        String[] values = line.split(",");
+        int ci = Integer.parseInt(values[0].replace(".", "")); // quitamos los puntos
+        
+        String firstName = values[1];
+        String lastName = values[2];
+        String email = values[3];
+        String gender = values[4];
+        String roomType = values[5];
+        String phoneNumber = values[6];
+        String arrivalDate = values[7];
+        String departureDate = values[8];
+
+        Reservation reservation = new Reservation();
+        reservation.setCustomerCI(ci);
+        reservation.setFirstName(firstName);
+        reservation.setLastName(lastName);
+        reservation.setEmail(email);
+        reservation.setGender(gender);
+        reservation.setRoomType(roomType);
+        reservation.setPhoneNumber(phoneNumber);
+        reservation.setArrivalDate(arrivalDate);
+        reservation.setDepartureDate(departureDate);
+
+        reservationTree.put(ci, reservation);
+    }
+    br.close();
+}
+
+
 
 
     
@@ -91,7 +133,11 @@ public void loadData(BinarySeachTree<Integer, LinkedList<Customer>> tree) throws
     } catch (IOException e) {
         e.printStackTrace();
     }
-
+   try {
+        loadReservationData(); 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 
 
     }
@@ -131,7 +177,7 @@ public void loadData(BinarySeachTree<Integer, LinkedList<Customer>> tree) throws
         historialButton = new javax.swing.JButton();
         addClient = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        busquedaRerservacion = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
@@ -284,10 +330,15 @@ public void loadData(BinarySeachTree<Integer, LinkedList<Customer>> tree) throws
         jButton4.setBorder(null);
         jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 120));
 
-        jButton5.setBackground(new java.awt.Color(230, 230, 230));
-        jButton5.setForeground(new java.awt.Color(230, 230, 230));
-        jButton5.setBorder(null);
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 120));
+        busquedaRerservacion.setBackground(new java.awt.Color(230, 230, 230));
+        busquedaRerservacion.setForeground(new java.awt.Color(230, 230, 230));
+        busquedaRerservacion.setBorder(null);
+        busquedaRerservacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                busquedaRerservacionActionPerformed(evt);
+            }
+        });
+        jPanel3.add(busquedaRerservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 120));
 
         jButton6.setBackground(new java.awt.Color(230, 230, 230));
         jButton6.setForeground(new java.awt.Color(230, 230, 230));
@@ -471,6 +522,28 @@ try {
     }
     }//GEN-LAST:event_historialButtonActionPerformed
 
+    private void busquedaRerservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaRerservacionActionPerformed
+         String ciString = null;
+    do {
+        ciString = JOptionPane.showInputDialog(this, "Ingrese la cédula de identidad");
+        if (ciString == null) return;
+        if (!ciString.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "La cédula de identidad debe ser numérica.");
+        } else {
+            break;
+        }
+    } while (true);
+    int ci = Integer.parseInt(ciString);
+
+    Reservation reservation = reservationTree.get(ci);
+
+    if (reservation == null) {
+        JOptionPane.showMessageDialog(this, "No existe una reservación para esta cédula.");
+    } else {
+        JOptionPane.showMessageDialog(this, reservation.toString());
+    }
+    }//GEN-LAST:event_busquedaRerservacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -508,9 +581,9 @@ try {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClient;
+    private javax.swing.JButton busquedaRerservacion;
     private javax.swing.JButton historialButton;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
