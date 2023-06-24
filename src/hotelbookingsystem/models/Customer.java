@@ -1,12 +1,15 @@
 package  hotelbookingsystem.models;
 
-<<<<<<< HEAD
-=======
 import hotelbookingsystem.utils.HashTable;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
->>>>>>> de783ea (Inputs agregados a la interfaz)
+
+
+import hotelbookingsystem.utils.HashTable;
+
+import hotelbookingsystem.utils.HashTable;
+
 public class Customer {
     private int ci;
     private String firstName;
@@ -84,14 +87,10 @@ public class Customer {
         this.arrivalDate = arrivalDate;
     }
     
-<<<<<<< HEAD
-    
-     public String toString() {
-        return firstName + " " + lastName + ", CI: " + ci;
-=======
+
     public static void Status(HashTable habitaciones){
         
-        Scanner scanner = new Scanner(System.in);
+        
 
         String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");;
 
@@ -108,7 +107,7 @@ public class Customer {
                 JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " es la número: " + habitaciones.get(fullname) + ".");
             }
         }
->>>>>>> de783ea (Inputs agregados a la interfaz)
+
     }
 
 }

@@ -6,6 +6,8 @@ package hotelbookingsystem.view;
 
 import com.toedter.calendar.JDateChooser;
 import hotelbookingsystem.data.ControllerCsv;
+import hotelbookingsystem.data.CustomerData;
+import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.models.Customer;
 import hotelbookingsystem.models.Reservation;
 import hotelbookingsystem.utils.BinarySeachTree;
@@ -322,6 +324,11 @@ public void loadReservationData() throws IOException {
         jButton4.setBackground(new java.awt.Color(230, 230, 230));
         jButton4.setForeground(new java.awt.Color(230, 230, 230));
         jButton4.setBorder(null);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 120));
 
         busquedaRerservacion.setBackground(new java.awt.Color(230, 230, 230));
@@ -568,6 +575,12 @@ public void loadReservationData() throws IOException {
     private void checkInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkInActionPerformed
+    CustomerData customerdata = new CustomerData();
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+           
+        HashTable habitaciones = customerdata.getHabitaciones();
+        Status(habitaciones);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
