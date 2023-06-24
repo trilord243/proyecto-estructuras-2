@@ -42,5 +42,12 @@ public class LinkedList<T> {
         this.head = head;
     }
     
+    public void addFirst(T data) {
+    ListNode<T> newNode = new ListNode<>(data);
+    newNode.setNext(head);
+    head = newNode;
+}
+
+    
     
 }

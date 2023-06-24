@@ -127,7 +127,7 @@ public void loadReservationData() throws IOException {
     
     public Mainview() {
         initComponents();
-        tree = new BinarySeachTree<>();  // Inicializamos el árbol
+        tree = new BinarySeachTree<>();  
   
   
 

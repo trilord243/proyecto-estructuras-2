@@ -14,6 +14,7 @@ import java.io.IOException;
  * @author Escal
  */
 public class HotelBookingSystem {
+    /*
     private CustomerHashTable customerTable;
     private BinarySeachTree<String, Reservation> reservationTree;
     private BinarySeachTree<String, Reservation> roomHistoryTree;
@@ -104,7 +105,7 @@ public class HotelBookingSystem {
     reader.close();
 }
 
-
+*/
 
 }
 

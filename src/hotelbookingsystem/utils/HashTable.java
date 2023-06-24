@@ -1,6 +1,5 @@
 package hotelbookingsystem.utils;
 
-import java.util.LinkedList;
 
 public class HashTable<K, V> {
     private LinkedList<Entry<K, V>>[] array;
@@ -18,34 +17,57 @@ public class HashTable<K, V> {
         return Math.abs(key.hashCode() % size);
     }
 
-    public void put(K key, V value) {
-        int index = getHash(key);
-        LinkedList<Entry<K, V>> list = array[index];
-        for (Entry<K, V> entry : list) {
-            if (entry.key.equals(key)) {
-                entry.value = value;
-                return;
-            }
+public void put(K key, V value) {
+    int index = getHash(key);
+    LinkedList<Entry<K, V>> list = array[index];
+    ListNode<Entry<K, V>> node = list.getHead();
+    while(node != null) {
+        Entry<K, V> entry = node.getData();
+        if(entry.key.equals(key)) {
+            entry.value = value;
+            return;
         }
-        list.addFirst(new Entry<>(key, value));
+        node = node.getNext();
     }
+    list.addFirst(new Entry<>(key, value));
+}
 
-    public V get(K key) {
-        int index = getHash(key);
-        LinkedList<Entry<K, V>> list = array[index];
-        for (Entry<K, V> entry : list) {
-            if (entry.key.equals(key)) {
-                return entry.value;
-            }
+
+public V get(K key) {
+    int index = getHash(key);
+    LinkedList<Entry<K, V>> list = array[index];
+    ListNode<Entry<K, V>> node = list.getHead();
+    while(node != null) {
+        Entry<K, V> entry = node.getData();
+        if(entry.key.equals(key)) {
+            return entry.value;
         }
-        return null;
+        node = node.getNext();
     }
+    return null;
+}
 
-    public void remove(K key) {
-        int index = getHash(key);
-        LinkedList<Entry<K, V>> list = array[index];
-        list.removeIf(entry -> entry.key.equals(key));
+public void remove(K key) {
+    int index = getHash(key);
+    LinkedList<Entry<K, V>> list = array[index];
+    ListNode<Entry<K, V>> node = list.getHead();
+    ListNode<Entry<K, V>> previous = null;
+    while(node != null) {
+        Entry<K, V> entry = node.getData();
+        if(entry.key.equals(key)) {
+            if(previous == null) {
+                // estamos eliminando el primer nodo de la lista
+                list.setHead(node.getNext());
+            } else {
+                // estamos eliminando un nodo en medio o al final de la lista
+                previous.setNext(node.getNext());
+            }
+            return;
+        }
+        previous = node;
+        node = node.getNext();
     }
+}
 
     private static class Entry<K, V> {
         K key;
