@@ -522,10 +522,12 @@ do {
 
     private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
         
-              try {
-        loadData(tree); 
-    } catch (IOException e) {
-        e.printStackTrace();
+      if (tree.isEmpty()) {
+        try {
+            loadData(tree); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
         
         

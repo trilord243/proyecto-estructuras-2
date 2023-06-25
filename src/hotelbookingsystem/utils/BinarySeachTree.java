@@ -46,5 +46,9 @@ public class BinarySeachTree<K extends Comparable<K>, V> {
             return node;
         }
     }
+    public boolean isEmpty() {
+    return root == null;
+}
+
 }
 
