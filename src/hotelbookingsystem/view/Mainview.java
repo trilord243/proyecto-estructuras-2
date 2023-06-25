@@ -5,7 +5,6 @@
 package hotelbookingsystem.view;
 
 import com.toedter.calendar.JDateChooser;
-import hotelbookingsystem.data.ControllerCsv;
 import hotelbookingsystem.data.CustomerData;
 import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.models.Customer;
@@ -20,6 +19,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import hotelbookingsystem.data.AvaliableRoom;
+import java.io.PrintWriter;
+import java.util.Date;
+
+
+
 
 /**
  *
@@ -30,6 +35,8 @@ public class Mainview extends javax.swing.JFrame {
     BinarySeachTree<Integer, LinkedList<Customer>> tree;
     BinarySeachTree<Integer, Reservation> reservationTree = new BinarySeachTree<>();
     HashTable<String, String> clients = new HashTable<>(1100);
+    AvaliableRoom avaliabreRoom=new AvaliableRoom();
+    
 
 
 
@@ -438,34 +445,43 @@ public void loadReservationData() throws IOException {
         "Tipo de Habitación", JOptionPane.QUESTION_MESSAGE, null, tipos_hab, tipos_hab[0]);
 
     String celular = JOptionPane.showInputDialog(this, "Ingrese el número de celular");
+    
+    
+   String llegada = null;
+String salida = null;
+Date fechaLlegada = null;
+Date fechaSalida = null;
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    String llegada = null;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    do {
-        JDateChooser jd = new JDateChooser();
-        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
-        llegada = sdf.format(jd.getDate());
-        if (llegada == null) return; // Si el usuario presiona cancelar
-        if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-            JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
-        } else {
-            break;
-        }
-    } while (true);
+do {
+    JDateChooser jd = new JDateChooser();
+    JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
+    fechaLlegada = jd.getDate();
+    llegada = sdf.format(fechaLlegada);
+    if (llegada == null) return; // Si el usuario presiona cancelar
+    if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+        JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
+    } else {
+        break;
+    }
+} while (true);
 
-    // Lo mismo para la fecha de salida, reutilizando el mismo formato de fecha.
-    String salida = null;
-    do {
-        JDateChooser jd = new JDateChooser();
-        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
-        salida = sdf.format(jd.getDate());
-        if (salida == null) return; // Si el usuario presiona cancelar
-        if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-            JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
-        } else {
-            break;
-        }
-    } while (true);
+
+do {
+    JDateChooser jd = new JDateChooser();
+    JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
+    fechaSalida = jd.getDate();
+    salida = sdf.format(fechaSalida);
+    if (salida == null) return; // Si el usuario presiona cancelar
+    if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+        JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
+    } else if (fechaSalida.before(fechaLlegada)) {
+        JOptionPane.showMessageDialog(this, "La fecha de salida no puede ser anterior a la fecha de llegada.");
+    } else {
+        break;
+    }
+} while (true);
+
 
     String clientInfo = String.join(",", ci, primer_nombre, segundo_nombre, email, genero, tipo_hab, celular, llegada, salida) + "\n";
    clients.put(ci, clientInfo);
@@ -573,9 +589,63 @@ public void loadReservationData() throws IOException {
     }//GEN-LAST:event_busquedaRerservacionActionPerformed
 
     private void checkInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInActionPerformed
-        // TODO add your handling code here:
+        avaliabreRoom.createAvailableRoomsCSV();
+         String ci = JOptionPane.showInputDialog("Por favor, introduzca el número de cédula:");
+         
+    ci = ci.replace(".", ""); // quitar los puntos del número de cédula introducido por el usuario
+
+try {
+    // Leer el archivo CSV de clientes
+    BufferedReader br = new BufferedReader(new FileReader("Booking_hotel - reservas.csv"));
+    String line;
+    String clientData = null;
+    while ((line = br.readLine()) != null) {
+        String ciFromFile = line.split(",")[0].replace(".", ""); // quitar los puntos del número de cédula del archivo
+        if (ciFromFile.equals(ci)) {
+            clientData = line;
+            break;
+        }
+    }
+    br.close();
+
+        if (clientData == null) {
+            JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
+            return;
+        }
+
+        String roomType = clientData.split(",")[5]; // Asumiendo que el tipo de habitación es el sexto campo
+
+        // Leer el archivo CSV de habitaciones disponibles
+        br = new BufferedReader(new FileReader("available_rooms.csv"));
+        String roomData = null;
+        while ((line = br.readLine()) != null) {
+            if (line.split(",")[1].equals(roomType)) {
+                roomData = line;
+                break;
+            }
+        }
+        br.close();
+
+        if (roomData == null) {
+            JOptionPane.showMessageDialog(null, "No hay habitaciones disponibles del tipo seleccionado.");
+            return;
+        }
+
+        // Agregar los datos del cliente al archivo CSV de habitaciones ocupadas
+        PrintWriter pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
+        pw.println(roomData.split(",")[0] + "," + clientData);
+        pw.close();
+
+        // Eliminar la habitación del archivo CSV de habitaciones disponibles
+     
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        
+    }
     }//GEN-LAST:event_checkInActionPerformed
-    CustomerData customerdata = new CustomerData();
+    
+       CustomerData customerdata = new CustomerData();
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
            
         HashTable habitaciones = customerdata.getHabitaciones();

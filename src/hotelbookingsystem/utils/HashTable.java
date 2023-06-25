@@ -68,6 +68,29 @@ public void remove(K key) {
         node = node.getNext();
     }
 }
+public int size() {
+    int count = 0;
+    for (LinkedList<Entry<K, V>> list : array) {
+        ListNode<Entry<K, V>> node = list.getHead();
+        while (node != null) {
+            count++;
+            node = node.getNext();
+        }
+    }
+    return count;
+}
+
+public LinkedList<K> keys() {
+    LinkedList<K> keys = new LinkedList<>();
+    for (LinkedList<Entry<K, V>> list : array) {
+        ListNode<Entry<K, V>> node = list.getHead();
+        while (node != null) {
+            keys.append(node.getData().key);
+            node = node.getNext();
+        }
+    }
+    return keys;
+}
 
     private static class Entry<K, V> {
         K key;

@@ -1,5 +1,5 @@
 ci,primer_nombre,segundo_nombre,email,genero,tipo_hab,celular,llegada,salida
-13.502.927,Evered,Ralestone,eralestone0@ask.com,Male,doble,(648) 8757440,14/10/2023,29/10/2023
+13502927,Evered,Ralestone,eralestone0@ask.com,Male,doble,(648) 8757440,14/10/2023,29/10/2023
 13.369.274,Berna,Lawly,blawly1@privacy.gov.au,Female,doble,(984) 2395498,15/08/2023,07/09/2023
 17.614.312,Marti,Meconi,mmeconi2@mozilla.org,Female,suite,(581) 7713030,12/08/2023,27/08/2023
 18.383.175,Jennifer,Allworthy,jallworthy3@squidoo.com,Female,doble,(647) 9910223,02/10/2023,13/10/2023
@@ -1004,3 +1004,5 @@ ci,primer_nombre,segundo_nombre,email,genero,tipo_hab,celular,llegada,salida
 6969,Felipe,Escalona,a@g.com,Macho,doble,6357,23/06/2023,30/06/2023
 420,fe,a,a@g.com,Muyer,doble,4,03/06/2023,30/06/2023
 69,ASAS,ASDASD,A@G.COM,ADSA,doble,545,08/06/2023,30/06/2023
+45,Felipe ,Escalona,a@gmail.copm,SDADAD,doble,6849646,02/06/2023,04/06/2023
+789,F,A,A@asd.com,as,doble,5,26/06/2023,30/06/2023

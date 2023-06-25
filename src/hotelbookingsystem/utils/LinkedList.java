@@ -47,6 +47,18 @@ public class LinkedList<T> {
     newNode.setNext(head);
     head = newNode;
 }
+    
+    public boolean contains(T data) {
+    ListNode<T> node = head;
+    while (node != null) {
+        if (node.getData().equals(data)) {
+            return true;
+        }
+        node = node.getNext();
+    }
+    return false;
+}
+
 
     
     
