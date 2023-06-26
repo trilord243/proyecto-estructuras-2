@@ -20,7 +20,7 @@ public class CustomerData {
     private HashTable habitaciones;
 
     public CustomerData() {
-        habitaciones = new HashTable(400);
+        habitaciones = new HashTable(320);
         String filePath = "Booking_hotel - estado.csv";
         readCSV(filePath);
     }

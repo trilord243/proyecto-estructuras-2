@@ -140,6 +140,13 @@ public void loadReservationData() throws IOException {
     public Mainview() {
         initComponents();
         tree = new BinarySeachTree<>();  
+              if (tree.isEmpty()) {
+        try {
+            loadData(tree); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
   
  
@@ -522,13 +529,7 @@ do {
 
     private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
         
-      if (tree.isEmpty()) {
-        try {
-            loadData(tree); 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
         
         
         String roomNumberString = null;
