@@ -139,10 +139,9 @@ public void loadReservationData() throws IOException {
     public Mainview() {
         initComponents();
         tree = new BinarySeachTree<>();  
-  
-  
 
-
+  
+ 
     }
 
     /**
@@ -688,6 +687,7 @@ try {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClient;

@@ -6,6 +6,7 @@ package hotelbookingsystem;
 
 import hotelbookingsystem.data.CustomerData;
 import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.view.Mainview;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -20,21 +21,10 @@ public class HotelBookingSystem {
      */
     
     public static void main(String[] args) {
-        CustomerData customerdata = new CustomerData();
-        HashTable habitaciones = customerdata.getHabitaciones();
-        
-        Scanner scanner = new Scanner(System.in);
-        String fullname;
+        Mainview mainview = new Mainview();
 
-        System.out.println("Enter the guest´s fullname to search for the room:");
-        fullname = scanner.nextLine();
-
-        if (habitaciones.get(fullname)==null){
-            System.out.println(fullname +"'s room does not exist, contact customer service.");
-        }
-        else{
-            System.out.println(fullname +"'s room is number: " + habitaciones.get(fullname)+".");
-        }
+        // Hace que el JFrame sea visible
+        mainview.setVisible(true);
         
     
     }
