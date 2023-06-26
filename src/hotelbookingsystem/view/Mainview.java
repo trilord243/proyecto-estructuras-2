@@ -609,41 +609,53 @@ try {
     }
     br.close();
 
-        if (clientData == null) {
-            JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
-            return;
-        }
+    if (clientData == null) {
+        JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
+        return;
+    }
 
-        String roomType = clientData.split(",")[5]; // Asumiendo que el tipo de habitación es el sexto campo
-
-        // Leer el archivo CSV de habitaciones disponibles
-        br = new BufferedReader(new FileReader("available_rooms.csv"));
-        String roomData = null;
-        while ((line = br.readLine()) != null) {
-            if (line.split(",")[1].equals(roomType)) {
-                roomData = line;
-                break;
+    // Crear una nueva cadena que contenga todos los campos de clientData excepto el número de cédula y el tipo de habitación
+    String[] clientDataFields = clientData.split(",");
+    StringBuilder clientDataWithoutCIAndRoomType = new StringBuilder();
+    for (int i = 1; i < clientDataFields.length; i++) {
+        if (i != 5) { // Asumiendo que el tipo de habitación es el sexto campo
+            clientDataWithoutCIAndRoomType.append(clientDataFields[i]);
+            if (i < clientDataFields.length - 1) {
+                clientDataWithoutCIAndRoomType.append(",");
             }
         }
-        br.close();
-
-        if (roomData == null) {
-            JOptionPane.showMessageDialog(null, "No hay habitaciones disponibles del tipo seleccionado.");
-            return;
-        }
-
-        // Agregar los datos del cliente al archivo CSV de habitaciones ocupadas
-        PrintWriter pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
-        pw.println(roomData.split(",")[0] + "," + clientData);
-        pw.close();
-
-        // Eliminar la habitación del archivo CSV de habitaciones disponibles
-     
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        
     }
+
+    String roomType = clientDataFields[5]; // Asumiendo que el tipo de habitación es el sexto campo
+
+    // Leer el archivo CSV de habitaciones disponibles
+    br = new BufferedReader(new FileReader("available_rooms.csv"));
+    String roomData = null;
+    while ((line = br.readLine()) != null) {
+        if (line.split(",")[1].equals(roomType)) {
+            roomData = line;
+            break;
+        }
+    }
+    br.close();
+
+    if (roomData == null) {
+        JOptionPane.showMessageDialog(null, "No hay habitaciones disponibles del tipo seleccionado.");
+        return;
+    }
+
+    // Agregar los datos del cliente al archivo CSV de habitaciones ocupadas
+    PrintWriter pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
+    pw.println(roomData.split(",")[0] + "," + clientDataWithoutCIAndRoomType.toString());
+    pw.close();
+
+    // Eliminar la habitación del archivo CSV de habitaciones disponibles
+
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+
     }//GEN-LAST:event_checkInActionPerformed
     
        CustomerData customerdata = new CustomerData();

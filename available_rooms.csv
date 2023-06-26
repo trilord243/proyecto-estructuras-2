@@ -1,9 +1,9 @@
 7,simple,1
 8,simple,1
-300,suite,10
 11,simple,1
 15,simple,1
 18,simple,1
+201,doble,4
 204,doble,4
 27,simple,1
 211,doble,5
@@ -21,6 +21,7 @@
 46,simple,2
 47,simple,2
 49,simple,2
+236,triple,5
 238,triple,5
 122,doble,3
 50,simple,2
@@ -62,8 +63,6 @@
 295,suite,10
 296,suite,10
 297,suite,10
-298,suite,10
 180,doble,4
-299,suite,10
 192,doble,4
 195,doble,4
