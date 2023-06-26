@@ -591,11 +591,10 @@ do {
     }//GEN-LAST:event_busquedaRerservacionActionPerformed
 
     private void checkInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInActionPerformed
-        avaliabreRoom.createAvailableRoomsCSV();
-         String ci = JOptionPane.showInputDialog("Por favor, introduzca el número de cédula:");
-         
-    ci = ci.replace(".", ""); // quitar los puntos del número de cédula introducido por el usuario
+      avaliabreRoom.createAvailableRoomsCSV();
+String ci = JOptionPane.showInputDialog("Por favor, introduzca el número de cédula:");
 
+ci = ci.replace(".", ""); // quitar los puntos del número de cédula introducido por el usuario
 
 try {
     // Leer el archivo CSV de clientes
@@ -616,17 +615,6 @@ try {
         pw.println(line);
     }
     br.close();
-    pw.close();
-
-    if (!inputFile.delete()) {
-        System.out.println("No se pudo eliminar el archivo original");
-        return;
-    }
-
-    if (!tempFile.renameTo(inputFile)) {
-        System.out.println("No se pudo renombrar el archivo temporal");
-        return;
-    }
 
     if (clientData == null) {
         JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
@@ -660,12 +648,25 @@ try {
 
     if (roomData == null) {
         JOptionPane.showMessageDialog(null, "No hay habitaciones disponibles del tipo seleccionado.");
+        pw.close(); // cerrar el PrintWriter antes de retornar
+        return;
+    }
+
+    // Si llegamos a este punto, significa que hay una habitación disponible del tipo seleccionado
+    // Entonces, podemos eliminar al cliente de la reserva
+    pw.close();
+    if (!inputFile.delete()) {
+        System.out.println("No se pudo eliminar el archivo original");
+        return;
+    }
+    if (!tempFile.renameTo(inputFile)) {
+        System.out.println("No se pudo renombrar el archivo temporal");
         return;
     }
 
     // Agregar los datos del cliente al archivo CSV de habitaciones ocupadas
     pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
-    pw.println(roomData.split(",")[0] + "," + clientDataWithoutCIAndRoomType.toString());
+    pw.println(roomData.split(",")[0] + "," + clientDataWithoutCIAndRoomType.toString() + "\n");
     pw.close();
 
     // Eliminar la habitación del archivo CSV de habitaciones disponibles
@@ -673,6 +674,7 @@ try {
 } catch (IOException e) {
     e.printStackTrace();
 }
+
 
 
     }//GEN-LAST:event_checkInActionPerformed
