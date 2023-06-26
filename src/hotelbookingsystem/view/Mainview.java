@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import hotelbookingsystem.data.AvaliableRoom;
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.Date;
 
@@ -595,19 +596,37 @@ do {
          
     ci = ci.replace(".", ""); // quitar los puntos del número de cédula introducido por el usuario
 
+
 try {
     // Leer el archivo CSV de clientes
-    BufferedReader br = new BufferedReader(new FileReader("Booking_hotel - reservas.csv"));
+    File inputFile = new File("Booking_hotel - reservas.csv");
+    File tempFile = new File("temp.csv");
+
+    BufferedReader br = new BufferedReader(new FileReader(inputFile));
+    PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
     String line;
     String clientData = null;
     while ((line = br.readLine()) != null) {
         String ciFromFile = line.split(",")[0].replace(".", ""); // quitar los puntos del número de cédula del archivo
         if (ciFromFile.equals(ci)) {
             clientData = line;
-            break;
+            continue; // no escribir esta línea en el archivo temporal
         }
+        pw.println(line);
     }
     br.close();
+    pw.close();
+
+    if (!inputFile.delete()) {
+        System.out.println("No se pudo eliminar el archivo original");
+        return;
+    }
+
+    if (!tempFile.renameTo(inputFile)) {
+        System.out.println("No se pudo renombrar el archivo temporal");
+        return;
+    }
 
     if (clientData == null) {
         JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
@@ -645,7 +664,7 @@ try {
     }
 
     // Agregar los datos del cliente al archivo CSV de habitaciones ocupadas
-    PrintWriter pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
+    pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
     pw.println(roomData.split(",")[0] + "," + clientDataWithoutCIAndRoomType.toString());
     pw.close();
 
