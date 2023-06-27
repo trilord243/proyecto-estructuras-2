@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Reservation {
-    private String customerCI;
+    private int customerCI;
     private String firstName;
     private String lastName;
     private String email;
@@ -26,11 +26,11 @@ private String roomNumber;
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
     }
-    public String getCustomerCI() {
+    public int getCustomerCI() {
         return customerCI;
     }
 
-    public void setCustomerCI(String customerCI) {
+    public void setCustomerCI(int customerCI) {
         this.customerCI = customerCI;
     }
 
@@ -97,5 +97,12 @@ private String roomNumber;
     public void setDepartureDate(String departureDate) {
         this.departureDate = departureDate;
     }
+    
+    
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + " - Llegada: " + arrivalDate + ", Salida: " + departureDate;
+    }
+
 }
 

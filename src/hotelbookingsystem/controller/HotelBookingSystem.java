@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package hotelbookingsystem.controller;
 
-import hotelbookingsystem.models.Customer;
+//import hotelbookingsystem.models.Customer;
 import hotelbookingsystem.models.Reservation;
 import hotelbookingsystem.utils.BinarySeachTree;
 import hotelbookingsystem.utils.CustomerHashTable;
@@ -17,6 +14,7 @@ import java.io.IOException;
  * @author Escal
  */
 public class HotelBookingSystem {
+    /*
     private CustomerHashTable customerTable;
     private BinarySeachTree<String, Reservation> reservationTree;
     private BinarySeachTree<String, Reservation> roomHistoryTree;
@@ -107,7 +105,7 @@ public class HotelBookingSystem {
     reader.close();
 }
 
-
+*/
 
 }
 

@@ -6,11 +6,11 @@ package hotelbookingsystem;
 
 import hotelbookingsystem.data.CustomerData;
 import hotelbookingsystem.data.ReservationData;
-import static hotelbookingsystem.models.Customer.Status;
+//import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.utils.HashTable;
 import hotelbookingsystem.view.Mainview;
-
-
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -29,6 +29,7 @@ public class HotelBookingSystem {
         
         Mainview interfaz = new Mainview();
         interfaz.setVisible(true);
+
         
     }
 

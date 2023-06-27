@@ -4,6 +4,8 @@ import hotelbookingsystem.utils.HashTable;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
+
+
 public class Customer {
     private int ci;
     private String firstName;
@@ -81,9 +83,10 @@ public class Customer {
         this.arrivalDate = arrivalDate;
     }
     
+
+
     public static void Status(HashTable habitaciones){
         
-        Scanner scanner = new Scanner(System.in);
 
         String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");;
 
@@ -100,6 +103,13 @@ public class Customer {
                 JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " es la número: " + habitaciones.get(fullname) + ".");
             }
         }
+
     }
+    
+    public String toString() {
+        return firstName + " " + lastName + ", CI: " + ci;
+    }
+
+
 }
 

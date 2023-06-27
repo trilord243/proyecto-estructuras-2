@@ -5,35 +5,152 @@
 package hotelbookingsystem.view;
 
 import com.toedter.calendar.JDateChooser;
-import hotelbookingsystem.data.ControllerCsv;
+
 import hotelbookingsystem.data.CustomerData;
-import hotelbookingsystem.models.Customer;
 import static hotelbookingsystem.models.Customer.Status;
+import hotelbookingsystem.models.Customer;
+import hotelbookingsystem.models.Reservation;
+import hotelbookingsystem.utils.BinarySeachTree;
 import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.utils.LinkedList;
+import hotelbookingsystem.utils.ListNode;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import hotelbookingsystem.data.AvaliableRoom;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Date;
+
+
+
 
 /**
  *
  * @author Escal
  */
 public class Mainview extends javax.swing.JFrame {
-    HashTable<String, Customer> customerTable = new HashTable<>(1200); // Un 20% más grande que el número esperado de clientes
+    HashTable<String, Customer> customerTable = new HashTable<>(1200);
+    BinarySeachTree<Integer, LinkedList<Customer>> tree;
+    BinarySeachTree<Integer, Reservation> reservationTree = new BinarySeachTree<>();
+    HashTable<String, String> clients = new HashTable<>(1100);
+    AvaliableRoom avaliabreRoom=new AvaliableRoom();
+    
+
+
+
+
 
 
     /**
      * Creates new form Mainview
      */
+    
+    
+    
+    
+    
+    
+    
+public void loadData(BinarySeachTree<Integer, LinkedList<Customer>> tree) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("Booking_hotel - historico.csv"));
+    String line;
+    
+    // Saltar la primera línea
+    br.readLine();
+    
+    while ((line = br.readLine()) != null) {
+        String[] values = line.split(",");
+        int ci = Integer.parseInt(values[0].replace(".", "")); // quitamos los puntos
+        String firstName = values[1];
+        String lastName = values[2];
+        String email = values[3];
+        String gender = values[4];
+        String arrivalDate = values[5];
+        int roomNumber = Integer.parseInt(values[6]);
+
+        Customer customer = new Customer();
+        customer.setCi(ci);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        customer.setGender(gender);
+        customer.setArrivalDate(arrivalDate);
+
+        LinkedList<Customer> customers = tree.get(roomNumber);
+        if (customers == null) {
+            customers = new LinkedList<>();
+            tree.put(roomNumber, customers);
+        }
+        customers.append(customer);
+    }
+    br.close();
+}
+
+
+public void loadReservationData() throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("Booking_hotel - reservas.csv"));
+    String line;
+    boolean isFirstLine = true; // variable para controlar la primera línea (encabezado)
+    while ((line = br.readLine()) != null) {
+        
+        if (isFirstLine) {
+            isFirstLine = false; // Si es la primera línea (encabezado), se omite
+            continue;
+        }
+        String[] values = line.split(",");
+        int ci = Integer.parseInt(values[0].replace(".", "")); // quitamos los puntos
+        
+        String firstName = values[1];
+        String lastName = values[2];
+        String email = values[3];
+        String gender = values[4];
+        String roomType = values[5];
+        String phoneNumber = values[6];
+        String arrivalDate = values[7];
+        String departureDate = values[8];
+
+        Reservation reservation = new Reservation();
+        reservation.setCustomerCI(ci);
+        reservation.setFirstName(firstName);
+        reservation.setLastName(lastName);
+        reservation.setEmail(email);
+        reservation.setGender(gender);
+        reservation.setRoomType(roomType);
+        reservation.setPhoneNumber(phoneNumber);
+        reservation.setArrivalDate(arrivalDate);
+        reservation.setDepartureDate(departureDate);
+
+        reservationTree.put(ci, reservation);
+    }
+    br.close();
+}
+
+
+
+
+    
+    
+    
+    
+    
+    
     public Mainview() {
         initComponents();
-        
+        tree = new BinarySeachTree<>();  
+              if (tree.isEmpty()) {
+        try {
+            loadData(tree); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-
+  
+ 
     }
 
     /**
@@ -68,12 +185,12 @@ public class Mainview extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        historialButton = new javax.swing.JButton();
         addClient = new javax.swing.JButton();
-        Boton_Prop_1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        busquedaRerservacion = new javax.swing.JButton();
+        checkOut = new javax.swing.JButton();
+        checkIn = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -199,10 +316,15 @@ public class Mainview extends javax.swing.JFrame {
         jLabel17.setText("Agregar reserva");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(230, 230, 230));
-        jButton2.setForeground(new java.awt.Color(230, 230, 230));
-        jButton2.setBorder(null);
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, 130, 120));
+        historialButton.setBackground(new java.awt.Color(230, 230, 230));
+        historialButton.setForeground(new java.awt.Color(230, 230, 230));
+        historialButton.setBorder(null);
+        historialButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historialButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(historialButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, 130, 120));
 
         addClient.setBackground(new java.awt.Color(230, 230, 230));
         addClient.setForeground(new java.awt.Color(230, 230, 230));
@@ -214,30 +336,40 @@ public class Mainview extends javax.swing.JFrame {
         });
         jPanel3.add(addClient, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 130, 120));
 
-        Boton_Prop_1.setBackground(new java.awt.Color(230, 230, 230));
-        Boton_Prop_1.setForeground(new java.awt.Color(230, 230, 230));
-        Boton_Prop_1.setBorder(null);
-        Boton_Prop_1.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setBackground(new java.awt.Color(230, 230, 230));
+        jButton4.setForeground(new java.awt.Color(230, 230, 230));
+        jButton4.setBorder(null);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Boton_Prop_1ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
-        jPanel3.add(Boton_Prop_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 120));
+        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 120));
 
-        jButton5.setBackground(new java.awt.Color(230, 230, 230));
-        jButton5.setForeground(new java.awt.Color(230, 230, 230));
-        jButton5.setBorder(null);
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 120));
+        busquedaRerservacion.setBackground(new java.awt.Color(230, 230, 230));
+        busquedaRerservacion.setForeground(new java.awt.Color(230, 230, 230));
+        busquedaRerservacion.setBorder(null);
+        busquedaRerservacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                busquedaRerservacionActionPerformed(evt);
+            }
+        });
+        jPanel3.add(busquedaRerservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 120));
 
-        jButton6.setBackground(new java.awt.Color(230, 230, 230));
-        jButton6.setForeground(new java.awt.Color(230, 230, 230));
-        jButton6.setBorder(null);
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, 130, 120));
+        checkOut.setBackground(new java.awt.Color(230, 230, 230));
+        checkOut.setForeground(new java.awt.Color(230, 230, 230));
+        checkOut.setBorder(null);
+        jPanel3.add(checkOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, 130, 120));
 
-        jButton7.setBackground(new java.awt.Color(230, 230, 230));
-        jButton7.setForeground(new java.awt.Color(230, 230, 230));
-        jButton7.setBorder(null);
-        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 130, 120));
+        checkIn.setBackground(new java.awt.Color(230, 230, 230));
+        checkIn.setForeground(new java.awt.Color(230, 230, 230));
+        checkIn.setBorder(null);
+        checkIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkInActionPerformed(evt);
+            }
+        });
+        jPanel3.add(checkIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 130, 120));
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 356, -1, 20));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 610));
@@ -245,38 +377,36 @@ public class Mainview extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+
+
+    
+    
+    
+    
+    
     private void addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientActionPerformed
-  String csvFile = "Booking_hotel - reservas.csv";
-String ci = null;
-String line = "";
-String cvsSplitBy = ",";
+ String csvFile = "Booking_hotel - reservas.csv";
+  String ci = null;
+  String line = "";
+  String cvsSplitBy = ",";
 
-BufferedReader br = null;
-try {
+  // Cargar los clientes existentes en la Hashtable
+  BufferedReader br = null;
+  try {
     br = new BufferedReader(new FileReader(csvFile));
-    do {
-        ci = JOptionPane.showInputDialog(this, "Ingrese la cédula del cliente");
-        if (ci == null) return; // Si el usuario presiona cancelar
-        if (!ci.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "La cédula debe ser numérica.");
-        } else {
-            while ((line = br.readLine()) != null) {
-                // Usamos coma como separador
-                String[] client = line.split(cvsSplitBy);
+        br = new BufferedReader(new FileReader(csvFile));
+    while ((line = br.readLine()) != null) {
+        String[] clientData = line.split(",");
+        String ciNoDots = clientData[0].replace(".", ""); // Eliminar los puntos
+        clients.put(ciNoDots, line);
+    }
 
-                // Verificamos si el cliente ya está registrado
-                if (client[0].replace(".", "").equals(ci)) {
-                    JOptionPane.showMessageDialog(this, "Ya existe un cliente con esa cédula");
-                    return;
-                }
-            }
-            break;
-        }
-    } while (true);
-} catch (IOException e) {
+  } catch (IOException e) {
     JOptionPane.showMessageDialog(this, "Ocurrió un error al buscar la cédula");
     e.printStackTrace();
-} finally {
+  } finally {
     if (br != null) {
         try {
             br.close();
@@ -284,7 +414,23 @@ try {
             e.printStackTrace();
         }
     }
-}
+  }
+
+  // Registrar al nuevo cliente
+  do {
+    ci = JOptionPane.showInputDialog(this, "Ingrese la cédula del cliente");
+    if (ci == null) return; // Si el usuario presiona cancelar
+    if (!ci.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "La cédula debe ser numérica.");
+    } else {
+        // Verificar si el cliente ya está registrado
+        if (clients.get(ci) != null) {
+            JOptionPane.showMessageDialog(this, "Ya existe un cliente con esa cédula");
+            return;
+        }
+        break;
+    }
+  } while (true);
 
     String primer_nombre = JOptionPane.showInputDialog(this, "Ingrese el primer nombre");
     String segundo_nombre = JOptionPane.showInputDialog(this, "Ingrese el segundo nombre");
@@ -307,36 +453,46 @@ try {
         "Tipo de Habitación", JOptionPane.QUESTION_MESSAGE, null, tipos_hab, tipos_hab[0]);
 
     String celular = JOptionPane.showInputDialog(this, "Ingrese el número de celular");
+    
+    
+   String llegada = null;
+String salida = null;
+Date fechaLlegada = null;
+Date fechaSalida = null;
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    String llegada = null;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    do {
-        JDateChooser jd = new JDateChooser();
-        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
-        llegada = sdf.format(jd.getDate());
-        if (llegada == null) return; // Si el usuario presiona cancelar
-        if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-            JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
-        } else {
-            break;
-        }
-    } while (true);
+do {
+    JDateChooser jd = new JDateChooser();
+    JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
+    fechaLlegada = jd.getDate();
+    llegada = sdf.format(fechaLlegada);
+    if (llegada == null) return; // Si el usuario presiona cancelar
+    if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+        JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
+    } else {
+        break;
+    }
+} while (true);
 
-    // Lo mismo para la fecha de salida, reutilizando el mismo formato de fecha.
-    String salida = null;
-    do {
-        JDateChooser jd = new JDateChooser();
-        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
-        salida = sdf.format(jd.getDate());
-        if (salida == null) return; // Si el usuario presiona cancelar
-        if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-            JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
-        } else {
-            break;
-        }
-    } while (true);
+
+do {
+    JDateChooser jd = new JDateChooser();
+    JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
+    fechaSalida = jd.getDate();
+    salida = sdf.format(fechaSalida);
+    if (salida == null) return; // Si el usuario presiona cancelar
+    if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+        JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
+    } else if (fechaSalida.before(fechaLlegada)) {
+        JOptionPane.showMessageDialog(this, "La fecha de salida no puede ser anterior a la fecha de llegada.");
+    } else {
+        break;
+    }
+} while (true);
+
 
     String clientInfo = String.join(",", ci, primer_nombre, segundo_nombre, email, genero, tipo_hab, celular, llegada, salida) + "\n";
+   clients.put(ci, clientInfo);
 
 
 
@@ -378,6 +534,166 @@ try {
         Status(habitaciones);
     }//GEN-LAST:event_Boton_Prop_1ActionPerformed
 
+    private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
+        
+
+        
+        
+        String roomNumberString = null;
+    do {
+        roomNumberString = JOptionPane.showInputDialog(this, "Ingrese el número de la habitación");
+        if (roomNumberString == null) return; // Si el usuario presiona cancelar
+        if (!roomNumberString.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El número de habitación debe ser numérico.");
+        } else {
+            break;
+        }
+    } while (true);
+    Integer roomNumber = Integer.parseInt(roomNumberString);
+
+    LinkedList guests = tree.get(roomNumber);
+
+    if (guests == null) {
+        JOptionPane.showMessageDialog(this, "No hay historial para esta habitación.");
+    } else {
+        StringBuilder guestList = new StringBuilder();
+        ListNode node = guests.getHead();
+
+        while (node != null) {
+            guestList.append(node.getData()).append("\n");
+            node = node.getNext();
+        }
+
+        JOptionPane.showMessageDialog(this, "Los clientes que se han alojado en esta habitación son:\n" + guestList.toString());
+    }
+    }//GEN-LAST:event_historialButtonActionPerformed
+
+    private void busquedaRerservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaRerservacionActionPerformed
+        
+         try {
+        loadReservationData(); 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+        
+        
+        String ciString = null;
+    do {
+        ciString = JOptionPane.showInputDialog(this, "Ingrese la cédula de identidad");
+        if (ciString == null) return;
+        if (!ciString.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "La cédula de identidad debe ser numérica.");
+        } else {
+            break;
+        }
+    } while (true);
+    int ci = Integer.parseInt(ciString);
+
+    Reservation reservation = reservationTree.get(ci);
+
+    if (reservation == null) {
+        JOptionPane.showMessageDialog(this, "No existe una reservación para esta cédula.");
+    } else {
+        JOptionPane.showMessageDialog(this, reservation.toString());
+    }
+    }//GEN-LAST:event_busquedaRerservacionActionPerformed
+
+    private void checkInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInActionPerformed
+      avaliabreRoom.createAvailableRoomsCSV();
+String ci = JOptionPane.showInputDialog("Por favor, introduzca el número de cédula:");
+
+ci = ci.replace(".", ""); // quitar los puntos del número de cédula introducido por el usuario
+
+try {
+    // Leer el archivo CSV de clientes
+    File inputFile = new File("Booking_hotel - reservas.csv");
+    File tempFile = new File("temp.csv");
+
+    BufferedReader br = new BufferedReader(new FileReader(inputFile));
+    PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+    String line;
+    String clientData = null;
+    while ((line = br.readLine()) != null) {
+        String ciFromFile = line.split(",")[0].replace(".", ""); // quitar los puntos del número de cédula del archivo
+        if (ciFromFile.equals(ci)) {
+            clientData = line;
+            continue; // no escribir esta línea en el archivo temporal
+        }
+        pw.println(line);
+    }
+    br.close();
+
+    if (clientData == null) {
+        JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
+        return;
+    }
+
+    // Crear una nueva cadena que contenga todos los campos de clientData excepto el número de cédula y el tipo de habitación
+    String[] clientDataFields = clientData.split(",");
+    StringBuilder clientDataWithoutCIAndRoomType = new StringBuilder();
+    for (int i = 1; i < clientDataFields.length; i++) {
+        if (i != 5) { // Asumiendo que el tipo de habitación es el sexto campo
+            clientDataWithoutCIAndRoomType.append(clientDataFields[i]);
+            if (i < clientDataFields.length - 1) {
+                clientDataWithoutCIAndRoomType.append(",");
+            }
+        }
+    }
+
+    String roomType = clientDataFields[5]; // Asumiendo que el tipo de habitación es el sexto campo
+
+    // Leer el archivo CSV de habitaciones disponibles
+    br = new BufferedReader(new FileReader("available_rooms.csv"));
+    String roomData = null;
+    while ((line = br.readLine()) != null) {
+        if (line.split(",")[1].equals(roomType)) {
+            roomData = line;
+            break;
+        }
+    }
+    br.close();
+
+    if (roomData == null) {
+        JOptionPane.showMessageDialog(null, "No hay habitaciones disponibles del tipo seleccionado.");
+        pw.close(); // cerrar el PrintWriter antes de retornar
+        return;
+    }
+
+    // Si llegamos a este punto, significa que hay una habitación disponible del tipo seleccionado
+    // Entonces, podemos eliminar al cliente de la reserva
+    pw.close();
+    if (!inputFile.delete()) {
+        System.out.println("No se pudo eliminar el archivo original");
+        return;
+    }
+    if (!tempFile.renameTo(inputFile)) {
+        System.out.println("No se pudo renombrar el archivo temporal");
+        return;
+    }
+
+    // Agregar los datos del cliente al archivo CSV de habitaciones ocupadas
+    pw = new PrintWriter(new FileWriter("Booking_hotel - estado.csv", true));
+    pw.println(roomData.split(",")[0] + "," + clientDataWithoutCIAndRoomType.toString() + "\n");
+    pw.close();
+
+    // Eliminar la habitación del archivo CSV de habitaciones disponibles
+
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+
+
+    }//GEN-LAST:event_checkInActionPerformed
+    
+    //CustomerData customerdata = new CustomerData();
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+           
+        HashTable habitaciones = customerdata.getHabitaciones();
+        Status(habitaciones);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -413,13 +729,15 @@ try {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Boton_Prop_1;
     private javax.swing.JButton addClient;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton busquedaRerservacion;
+    private javax.swing.JButton checkIn;
+    private javax.swing.JButton checkOut;
+    private javax.swing.JButton historialButton;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

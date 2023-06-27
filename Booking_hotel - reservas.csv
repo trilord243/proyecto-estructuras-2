@@ -1,5 +1,6 @@
 ci,primer_nombre,segundo_nombre,email,genero,tipo_hab,celular,llegada,salida
 <<<<<<< HEAD
+<<<<<<< HEAD
 13.502.927,Evered,Ralestone,eralestone0@ask.com,Male,doble,(648) 8757440,14/10/2023,6/11/2023
 13.369.274,Berna,Lawly,blawly1@privacy.gov.au,Female,doble,(984) 2395498,15/08/2023,27/08/2023
 17.614.312,Marti,Meconi,mmeconi2@mozilla.org,Female,suite,(581) 7713030,12/08/2023,28/08/2023
@@ -1005,11 +1006,13 @@ ci,primer_nombre,segundo_nombre,email,genero,tipo_hab,celular,llegada,salida
 17.260.509,29.765.316,Chris,Diaz,CD@mozilla.org,Masculine,suite,(242) 2310316,20/08/2023,30/08/2023
 =======
 13.502.927,Evered,Ralestone,eralestone0@ask.com,Male,doble,(648) 8757440,14/10/2023,29/10/2023
+=======
+13502927,Evered,Ralestone,eralestone0@ask.com,Male,doble,(648) 8757440,14/10/2023,29/10/2023
+>>>>>>> origin/felipe
 13.369.274,Berna,Lawly,blawly1@privacy.gov.au,Female,doble,(984) 2395498,15/08/2023,07/09/2023
 17.614.312,Marti,Meconi,mmeconi2@mozilla.org,Female,suite,(581) 7713030,12/08/2023,27/08/2023
 18.383.175,Jennifer,Allworthy,jallworthy3@squidoo.com,Female,doble,(647) 9910223,02/10/2023,13/10/2023
 12.902.463,Kalli,Rickhuss,krickhuss4@nyu.edu,Female,doble,(161) 8724477,02/07/2023,11/07/2023
-14.597.844,Julianna,Gauld,jgauld5@dailymotion.com,Female,simple,(214) 5216557,05/07/2023,14/07/2023
 17.347.235,Debera,Cohen,dcohen6@scientificamerican.com,Female,triple,(277) 7802138,26/09/2023,11/10/2023
 15.505.394,Zuzana,Winram,zwinram7@live.com,Female,triple,(293) 5536835,02/09/2023,03/09/2023
 14.677.365,Hilary,Richmont,hrichmont8@php.net,Male,simple,(518) 6947876,19/10/2023,27/10/2023
@@ -2001,9 +2004,13 @@ ci,primer_nombre,segundo_nombre,email,genero,tipo_hab,celular,llegada,salida
 13.830.146,Shena,Torpie,storpierm@nifty.com,Female,suite,(871) 3287636,26/09/2023,21/10/2023
 17.067.243,Craggy,Mattaus,cmattausrn@bizjournals.com,Male,triple,(275) 4132046,11/07/2023,21/07/2023
 16.636.890,Dietrich,Belz,dbelzro@dell.com,Male,suite,(476) 5265065,23/07/2023,04/08/2023
+<<<<<<< HEAD
 19.950.482,Therine,Giannasi,tgiannasirp@nps.gov,Agender,doble,(756) 5582774,08/07/2023,16/07/2023
 19.694.664,Jeannie,Brammar,jbrammarrq@nationalgeographic.com,Female,simple,(353) 9199290,04/09/2023,06/09/2023
 54565,Felipe,Escalona,escalonaf12@gmail.com,M,simple,45645654,23/06/2023,30/06/2023
 3544,asda,asdsa,es@gmail.com,M,doble,asdasd,08/06/2023,03/06/2023
 >>>>>>> origin/felipe
 23,c,d,cd@g.com,masculino,suite,0,23/06/2023,14/06/2023
+=======
+891654,a4,asd4,asda@gmail.com,M,doble,7,26/06/2023,15/08/2023
+>>>>>>> origin/felipe
