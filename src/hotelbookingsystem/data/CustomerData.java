@@ -61,4 +61,11 @@ public class CustomerData {
     public HashTable<String, LinkedList<String>> getHabitaciones() {
         return habitaciones;
     }
+    
+    public void updateData() {
+        habitaciones.clear(); // Limpiar la tabla hash
+
+        String filePath = "Booking_hotel - estado.csv";
+        readCSV(filePath);
+    }
 }

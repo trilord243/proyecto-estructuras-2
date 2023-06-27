@@ -79,4 +79,9 @@ public class LinkedList<T> {
         }
         return result.toString();
     }
+    public void clear() {
+        head = null;
+        size = 0;
+    }
+
 }
