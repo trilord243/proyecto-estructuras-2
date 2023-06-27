@@ -1,7 +1,7 @@
 
 package hotelbookingsystem.controller;
 
-//import hotelbookingsystem.models.Customer;
+import hotelbookingsystem.models.Customer;
 import hotelbookingsystem.models.Reservation;
 import hotelbookingsystem.utils.BinarySeachTree;
 import hotelbookingsystem.utils.CustomerHashTable;

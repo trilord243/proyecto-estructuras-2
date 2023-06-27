@@ -5,7 +5,6 @@
 package hotelbookingsystem.view;
 
 import com.toedter.calendar.JDateChooser;
-
 import hotelbookingsystem.data.CustomerData;
 import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.models.Customer;
@@ -527,12 +526,6 @@ do {
         }
     }
     }//GEN-LAST:event_addClientActionPerformed
-    CustomerData customerdata = new CustomerData();
-    private void Boton_Prop_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_Prop_1ActionPerformed
-        
-        HashTable habitaciones = customerdata.getHabitaciones();
-        Status(habitaciones);
-    }//GEN-LAST:event_Boton_Prop_1ActionPerformed
 
     private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
         
@@ -687,7 +680,7 @@ try {
 
     }//GEN-LAST:event_checkInActionPerformed
     
-    //CustomerData customerdata = new CustomerData();
+       CustomerData customerdata = new CustomerData();
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
            
         HashTable habitaciones = customerdata.getHabitaciones();
@@ -731,7 +724,6 @@ try {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Boton_Prop_1;
     private javax.swing.JButton addClient;
     private javax.swing.JButton busquedaRerservacion;
     private javax.swing.JButton checkIn;

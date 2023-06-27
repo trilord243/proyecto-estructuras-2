@@ -5,8 +5,6 @@
 package hotelbookingsystem;
 
 import hotelbookingsystem.data.CustomerData;
-import hotelbookingsystem.data.ReservationData;
-//import static hotelbookingsystem.models.Customer.Status;
 import hotelbookingsystem.utils.HashTable;
 import hotelbookingsystem.view.Mainview;
 import java.util.Scanner;
@@ -18,21 +16,18 @@ import java.util.regex.Pattern;
  */
 public class HotelBookingSystem {
 
+    /**
+     * @param args the command line arguments
+     */
+    
     public static void main(String[] args) {
-        
-        //precargar la informacion de los hospedados
-//        CustomerData customerdata = new CustomerData();
-//        HashTable habitaciones = customerdata.getHabitaciones();
-        //mandar a Status la hashtable de habitaciones donde nos dira si el huesped esta hospedado en el holtel actualmente
-//        Status(habitaciones);
-//        ReservationData reservationdata = new ReservationData();
-        
-        Mainview interfaz = new Mainview();
-        interfaz.setVisible(true);
+        Mainview mainview = new Mainview();
 
+        // Hace que el JFrame sea visible
+        mainview.setVisible(true);
         
+    
     }
-
 }
     
 

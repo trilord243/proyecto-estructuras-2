@@ -6,6 +6,10 @@ import javax.swing.JOptionPane;
 
 
 
+import hotelbookingsystem.utils.HashTable;
+
+import hotelbookingsystem.utils.HashTable;
+
 public class Customer {
     private int ci;
     private String firstName;
@@ -84,8 +88,8 @@ public class Customer {
     }
     
 
-
     public static void Status(HashTable habitaciones){
+        
         
 
         String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");;
@@ -109,7 +113,6 @@ public class Customer {
     public String toString() {
         return firstName + " " + lastName + ", CI: " + ci;
     }
-
 
 }
 
