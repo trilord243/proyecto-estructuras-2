@@ -1,14 +1,11 @@
 package  hotelbookingsystem.models;
 
-import hotelbookingsystem.utils.HashTable;
-import java.util.Scanner;
+
 import javax.swing.JOptionPane;
-
-
-
-import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.utils.LinkedList;
 
 import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.utils.LinkedList;
 
 public class Customer {
     private int ci;
@@ -88,27 +85,36 @@ public class Customer {
     }
     
 
-    public static void Status(HashTable habitaciones){
-        
-        
+    public static void Status(HashTable<String, LinkedList<String>> habitaciones) {
+        String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");
 
-        String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");;
-
-        
         if (fullname == null) {
             JOptionPane.showMessageDialog(null, "Se canceló el ingreso de nombre completo.");
-        } else {
-            fullname =  fullname.toUpperCase();
-            if (fullname.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese su nombre completo.");
-            } else if (habitaciones.get(fullname) == null) {
-                JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " no existe. Si deseas registrar una nueva reserva, regresa a la página de inicio.");
-            } else {
-                JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " es la número: " + habitaciones.get(fullname) + ".");
-            }
+            return;
         }
 
+        fullname = fullname.toUpperCase();
+        if (fullname.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese su nombre completo.");
+            return;
+        }
+
+        LinkedList<String> habitacionesAsociadas = habitaciones.get(fullname);
+        if (habitacionesAsociadas == null) {
+            JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " no existe. Si deseas registrar una nueva reserva, regresa a la página de inicio.");
+        } else {
+            int numHabitaciones = habitacionesAsociadas.size();
+            String habitacionesStr = LinkedList.join(habitacionesAsociadas, ", ");
+
+            String mensajeHabitaciones = (numHabitaciones == 1) ?
+                    "La habitación de " + fullname + " es: " + habitacionesStr :
+                    "Las habitaciones de " + fullname + " son: " + habitacionesStr;
+
+            JOptionPane.showMessageDialog(null, mensajeHabitaciones);
+        }
     }
+
+
     
     public String toString() {
         return firstName + " " + lastName + ", CI: " + ci;

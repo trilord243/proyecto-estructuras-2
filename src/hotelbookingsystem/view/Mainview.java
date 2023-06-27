@@ -455,39 +455,43 @@ public void loadReservationData() throws IOException {
     
     
    String llegada = null;
-String salida = null;
-Date fechaLlegada = null;
-Date fechaSalida = null;
-SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    String salida = null;
+    Date fechaLlegada = null;
+    Date fechaSalida = null;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-do {
-    JDateChooser jd = new JDateChooser();
-    JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
-    fechaLlegada = jd.getDate();
-    llegada = sdf.format(fechaLlegada);
-    if (llegada == null) return; // Si el usuario presiona cancelar
-    if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-        JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
-    } else {
-        break;
-    }
-} while (true);
+    do {
+        JDateChooser jd = new JDateChooser();
+        jd.setMinSelectableDate(new Date()); // Establecer la fecha mínima seleccionable como la fecha actual
+        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de llegada", JOptionPane.PLAIN_MESSAGE);
+        fechaLlegada = jd.getDate();
+        llegada = sdf.format(fechaLlegada);
+        if (llegada == null) return; // Si el usuario presiona cancelar
+        if (!llegada.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+            JOptionPane.showMessageDialog(this, "La fecha de llegada es inválida.");
+        } else if (fechaLlegada.before(new Date())) {
+            JOptionPane.showMessageDialog(this, "La fecha de llegada no puede ser anterior a la fecha actual o la actual.");
+        } else {
+            break;
+        }
+    } while (true);
 
 
-do {
-    JDateChooser jd = new JDateChooser();
-    JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
-    fechaSalida = jd.getDate();
-    salida = sdf.format(fechaSalida);
-    if (salida == null) return; // Si el usuario presiona cancelar
-    if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-        JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
-    } else if (fechaSalida.before(fechaLlegada)) {
-        JOptionPane.showMessageDialog(this, "La fecha de salida no puede ser anterior a la fecha de llegada.");
-    } else {
-        break;
-    }
-} while (true);
+    do {
+        JDateChooser jd = new JDateChooser();
+        jd.setMinSelectableDate(fechaLlegada); // Establecer la fecha mínima seleccionable como la fecha de llegada
+        JOptionPane.showMessageDialog(null, jd, "Ingrese la fecha de salida", JOptionPane.PLAIN_MESSAGE);
+        fechaSalida = jd.getDate();
+        salida = sdf.format(fechaSalida);
+        if (salida == null) return; // Si el usuario presiona cancelar
+        if (!salida.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+            JOptionPane.showMessageDialog(this, "La fecha de salida es inválida.");
+        } else if (fechaSalida.before(fechaLlegada)) {
+            JOptionPane.showMessageDialog(this, "La fecha de salida no puede ser anterior a la fecha de llegada.");
+        } else {
+            break;
+        }
+    } while (true);
 
 
     String clientInfo = String.join(",", ci, primer_nombre, segundo_nombre, email, genero, tipo_hab, celular, llegada, salida) + "\n";
@@ -675,17 +679,17 @@ clientDataWithoutCIAndRoomType.append(","); // agregar una coma al final
 
     // Eliminar la habitación del archivo CSV de habitaciones disponibles
 
-} catch (IOException e) {
-    e.printStackTrace();
-}
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 
-
-
+    customerdata.updateData(); // Actualizar los datos en tiempo real
     }//GEN-LAST:event_checkInActionPerformed
     
-       CustomerData customerdata = new CustomerData();
+    CustomerData customerdata = new CustomerData();
+       
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-           
+        
         HashTable habitaciones = customerdata.getHabitaciones();
         Status(habitaciones);
     }//GEN-LAST:event_jButton4ActionPerformed

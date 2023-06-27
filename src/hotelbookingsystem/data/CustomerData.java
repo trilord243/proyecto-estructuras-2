@@ -9,18 +9,16 @@ package hotelbookingsystem.data;
  * @author Escal
  */
 import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.utils.LinkedList;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CustomerData {
-    private HashTable habitaciones;
+    private HashTable<String, LinkedList<String>> habitaciones;
 
     public CustomerData() {
-        habitaciones = new HashTable(320);
+        habitaciones = new HashTable<>(300);
         String filePath = "Booking_hotel - estado.csv";
         readCSV(filePath);
     }
@@ -33,26 +31,41 @@ public class CustomerData {
                 String linea = scanner.nextLine();
                 String[] valores = linea.split(",");
 
+                // Verificar si hay suficientes campos en la línea
+                if (valores.length < 3) {
+                    continue; // Omitir la línea si no tiene suficientes campos
+                }
+
                 String habitacion = valores[0].trim();
                 String nombre = valores[1].trim().toUpperCase();
                 String apellido = valores[2].trim().toUpperCase();
 
-                // Verificar si el número de habitación está vacío y omitir el cliente
-                if (habitacion.isEmpty()) {
-                    continue;
-                }
+                // Resto del código...
 
                 String nombreCompleto = nombre + " " + apellido;
-                habitaciones.put(nombreCompleto, habitacion);
-                //System.out.println(nombreCompleto + " " + habitacion);
+
+                if (habitaciones.get(nombreCompleto) == null) {
+                    LinkedList<String> habitacionesAsociadas = new LinkedList<>();
+                    habitacionesAsociadas.append(habitacion);
+                    habitaciones.put(nombreCompleto, habitacionesAsociadas);
+                } else {
+                    LinkedList<String> habitacionesAsociadas = habitaciones.get(nombreCompleto);
+                    habitacionesAsociadas.append(habitacion);
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-    public HashTable getHabitaciones() {
+
+    public HashTable<String, LinkedList<String>> getHabitaciones() {
         return habitaciones;
     }
+    
+    public void updateData() {
+        habitaciones.clear(); // Limpiar la tabla hash
 
-
+        String filePath = "Booking_hotel - estado.csv";
+        readCSV(filePath);
+    }
 }
