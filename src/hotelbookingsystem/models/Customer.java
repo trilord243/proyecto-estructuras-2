@@ -98,24 +98,36 @@ public class Customer {
         if (fullname == null) {
             JOptionPane.showMessageDialog(null, "Se canceló el ingreso de nombre completo.");
         } else {
-            fullname =  fullname.toUpperCase();
+            fullname = fullname.toUpperCase();
             if (fullname.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor, ingrese su nombre completo.");
             } else if (habitaciones.get(fullname) == null) {
                 JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " no existe. Si deseas registrar una nueva reserva, regresa a la página de inicio.");
             } else {
                 LinkedList<String> habitacionesAsociadas = habitaciones.get(fullname);
+
+                int numHabitaciones = 0;
                 StringBuilder habitacionesTexto = new StringBuilder();
                 ListNode<String> node = habitacionesAsociadas.getHead();
                 while (node != null) {
+                    numHabitaciones++;
                     habitacionesTexto.append(node.getData()).append(", ");
                     node = node.getNext();
                 }
                 String habitacionesStr = habitacionesTexto.toString().trim();
-                JOptionPane.showMessageDialog(null, "Las habitaciones de " + fullname + " son: " + habitacionesStr);
+
+                String mensajeHabitaciones;
+                if (numHabitaciones == 1) {
+                    mensajeHabitaciones = "La habitación de " + fullname + " es: " + habitacionesStr;
+                } else {
+                    mensajeHabitaciones = "Las habitaciones de " + fullname + " son: " + habitacionesStr;
+                }
+
+                JOptionPane.showMessageDialog(null, mensajeHabitaciones);
             }
         }
     }
+
     
     public String toString() {
         return firstName + " " + lastName + ", CI: " + ci;
