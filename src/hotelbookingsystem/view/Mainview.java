@@ -684,6 +684,7 @@ clientDataWithoutCIAndRoomType.append(","); // agregar una coma al final
     }//GEN-LAST:event_checkInActionPerformed
     
        CustomerData customerdata = new CustomerData();
+       
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
            
         HashTable habitaciones = customerdata.getHabitaciones();

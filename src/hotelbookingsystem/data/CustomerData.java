@@ -31,14 +31,16 @@ public class CustomerData {
                 String linea = scanner.nextLine();
                 String[] valores = linea.split(",");
 
+                // Verificar si hay suficientes campos en la línea
+                if (valores.length < 3) {
+                    continue; // Omitir la línea si no tiene suficientes campos
+                }
+
                 String habitacion = valores[0].trim();
                 String nombre = valores[1].trim().toUpperCase();
                 String apellido = valores[2].trim().toUpperCase();
 
-                // Verificar si el número de habitación está vacío y omitir el cliente
-                if (habitacion.isEmpty() || habitacion.equals("N/A")) {
-                    continue;
-                }
+                // Resto del código...
 
                 String nombreCompleto = nombre + " " + apellido;
 
