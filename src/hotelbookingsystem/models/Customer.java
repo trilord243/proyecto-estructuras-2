@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import hotelbookingsystem.utils.HashTable;
 
 import hotelbookingsystem.utils.HashTable;
+import hotelbookingsystem.utils.LinkedList;
+import hotelbookingsystem.utils.ListNode;
 
 public class Customer {
     private int ci;
@@ -88,13 +90,11 @@ public class Customer {
     }
     
 
-    public static void Status(HashTable habitaciones){
-        
-        
+    public static void Status(HashTable<String, LinkedList<String>> habitaciones) {
+        Scanner scanner = new Scanner(System.in);
 
-        String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");;
+        String fullname = JOptionPane.showInputDialog(null, "Ingrese su nombre completo:");
 
-        
         if (fullname == null) {
             JOptionPane.showMessageDialog(null, "Se canceló el ingreso de nombre completo.");
         } else {
@@ -104,10 +104,17 @@ public class Customer {
             } else if (habitaciones.get(fullname) == null) {
                 JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " no existe. Si deseas registrar una nueva reserva, regresa a la página de inicio.");
             } else {
-                JOptionPane.showMessageDialog(null, "La habitación de " + fullname + " es la número: " + habitaciones.get(fullname) + ".");
+                LinkedList<String> habitacionesAsociadas = habitaciones.get(fullname);
+                StringBuilder habitacionesTexto = new StringBuilder();
+                ListNode<String> node = habitacionesAsociadas.getHead();
+                while (node != null) {
+                    habitacionesTexto.append(node.getData()).append(", ");
+                    node = node.getNext();
+                }
+                String habitacionesStr = habitacionesTexto.toString().trim();
+                JOptionPane.showMessageDialog(null, "Las habitaciones de " + fullname + " son: " + habitacionesStr);
             }
         }
-
     }
     
     public String toString() {
