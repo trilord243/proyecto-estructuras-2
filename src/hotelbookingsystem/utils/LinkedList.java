@@ -2,9 +2,11 @@ package hotelbookingsystem.utils;
 
 public class LinkedList<T> {
     private ListNode<T> head;
+    private int size;
 
     public LinkedList() {
         head = null;
+        size = 0;
     }
 
     public void append(T data) {
@@ -17,6 +19,7 @@ public class LinkedList<T> {
             }
             node.setNext(new ListNode<>(data));
         }
+        size++;
     }
 
     public T get(int index) {
@@ -41,25 +44,39 @@ public class LinkedList<T> {
     public void setHead(ListNode<T> head) {
         this.head = head;
     }
+
+    public int size() {
+        return size;
+    }
     
     public void addFirst(T data) {
-    ListNode<T> newNode = new ListNode<>(data);
-    newNode.setNext(head);
-    head = newNode;
-}
-    
-    public boolean contains(T data) {
-    ListNode<T> node = head;
-    while (node != null) {
-        if (node.getData().equals(data)) {
-            return true;
-        }
-        node = node.getNext();
+        ListNode<T> newNode = new ListNode<>(data);
+        newNode.setNext(head);
+        head = newNode;
+        size++;
     }
-    return false;
-}
 
-
+    public boolean contains(T data) {
+        ListNode<T> node = head;
+        while (node != null) {
+            if (node.getData().equals(data)) {
+                return true;
+            }
+            node = node.getNext();
+        }
+        return false;
+    }
     
-    
+    public static String join(LinkedList<String> list, String separator) {
+        StringBuilder result = new StringBuilder();
+        ListNode<String> node = list.getHead();
+        while (node != null) {
+            result.append(node.getData());
+            if (node.getNext() != null) {
+                result.append(separator);
+            }
+            node = node.getNext();
+        }
+        return result.toString();
+    }
 }
