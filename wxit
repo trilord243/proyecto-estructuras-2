@@ -1,0 +1,36 @@
+[33m409a564[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mlist[m[33m)[m Arreglando buggs
+[33m83d2ba5[m ReadMe
+[33mf69233c[m  Testing
+[33mb227a26[m[33m ([m[1;31morigin/felipe[m[33m)[m  O(log(N)) requerimiento 3
+[33mb58d9ec[m Check in; No eleimina a persona en reserva si habitacion esta llena
+[33m9084097[m Borrando los datos de reservas
+[33m7548c0a[m Arreglando la forma de ingreso del check in
+[33mdf97809[m  Clase main
+[33m596aeb5[m  Arregllando bugs
+[33m6f053e8[m  Arreglando validacion de fecha
+[33m6d03aa9[m Bton de christian
+[33m2841a09[m arreglar el conflicto cherry pick
+[33me7ce146[m Registrar usuario usando Hashtables
+[33mf8a73ca[m Arreglando Hashtables
+[33ma1dd1f9[m Borrando LinkedList de utils en clase HashTable
+[33me5f202c[m Arreglando error, para que siempre se actualice los botones
+[33mdbb6181[m Requerimiento 2 completado
+[33mecd4a4a[m Requerimiento 3 completado
+[33mad933dc[m Botones del GUI
+[33m50e0089[m Arreglando genero, y la cedula
+[33m7113fa2[m Agregar cliente
+[33mf2272f3[m asd
+[33m4b3d9c7[m  merge
+[33m9b4ea0b[m  cherry pick christian
+[33m18f4e3d[m input parte 1
+[33m0c3fa20[m Mainview
+[33mab9994d[m testing
+[33m67f2101[m testing
+[33md7fe7a1[m input parte 1
+[33m6315ed3[m Cambio menor hashtable y Pre-Requeremiento 1
+[33m3b3572e[m Update HashTable.java
+[33mba2443a[m Arreglando errores
+[33m2a0b747[m HashTable changes errors
+[33m18e65a6[m Haciendo pruebas
+[33m7452ee4[m Nuevas Estructura de datos
+[33m144d3dc[m primera arquitectura y EDD
