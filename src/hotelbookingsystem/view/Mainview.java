@@ -623,16 +623,19 @@ try {
     }
 
     // Crear una nueva cadena que contenga todos los campos de clientData excepto el número de cédula y el tipo de habitación
-    String[] clientDataFields = clientData.split(",");
-    StringBuilder clientDataWithoutCIAndRoomType = new StringBuilder();
-    for (int i = 1; i < clientDataFields.length; i++) {
-        if (i != 5) { // Asumiendo que el tipo de habitación es el sexto campo
-            clientDataWithoutCIAndRoomType.append(clientDataFields[i]);
-            if (i < clientDataFields.length - 1) {
-                clientDataWithoutCIAndRoomType.append(",");
-            }
+    // Crear una nueva cadena que contenga todos los campos de clientData excepto el número de cédula, el tipo de habitación y la fecha de salida
+String[] clientDataFields = clientData.split(",");
+StringBuilder clientDataWithoutCIAndRoomType = new StringBuilder();
+for (int i = 1; i < clientDataFields.length; i++) {
+    if (i != 5 && i != clientDataFields.length - 1) { // Asumiendo que el tipo de habitación es el sexto campo y la fecha de salida es el último campo
+        clientDataWithoutCIAndRoomType.append(clientDataFields[i]);
+        if (i < clientDataFields.length - 2) { // no agregar una coma después del último campo
+            clientDataWithoutCIAndRoomType.append(",");
         }
     }
+}
+clientDataWithoutCIAndRoomType.append(","); // agregar una coma al final
+
 
     String roomType = clientDataFields[5]; // Asumiendo que el tipo de habitación es el sexto campo
 
