@@ -667,7 +667,15 @@ public class Mainview extends javax.swing.JFrame {
         String ci = JOptionPane.showInputDialog("Por favor, introduzca el número de cédula:");
         String celular = JOptionPane.showInputDialog(this, "Ingrese el número de celular");
         
+        try {
+            loadReservationData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
+        /// asi en estado num_hab,primer_nombre,apellido,email,genero,celular,llegada,	
+
+        /// asi esta en historico ci,primer_nombre,apellido,email,genero,llegada,num_hab
         
         
     }//GEN-LAST:event_checkOutActionPerformed
