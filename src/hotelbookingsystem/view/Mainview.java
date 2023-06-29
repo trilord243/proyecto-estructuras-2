@@ -660,6 +660,9 @@ public class Mainview extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Leer el estado cvs
         String csvFile = "Booking_hotel - estado.csv";
+        String csvFileH= "Booking_hotel - historico.csv";
+        
+        
         String line;
         
         
@@ -669,6 +672,7 @@ public class Mainview extends javax.swing.JFrame {
         // num_hab, primer_nombre, apellido, email, genero, celular, llegada Orden Estado
         try {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
+            BufferedReader br_h = new BufferedReader(new FileReader(csvFileH));
             //String line;
             br.readLine();
 
@@ -701,8 +705,45 @@ public class Mainview extends javax.swing.JFrame {
                 if (tlf_c == i_tlf) {
                     String msg=name + " " + lastName+ " " + tlf + " " + mail + " " + " " + gender+ " " + tlf_c;
                      // ci, primer_nombre, apellido, email, genero, llegada, num_hab - Orden historico 
-                     JOptionPane.showMessageDialog(this, msg);
+                     //JOptionPane.showMessageDialog(this, "¿Quiere terminar la estadia?: " + msg + " ");
+                    if (JOptionPane.showConfirmDialog(null, "¿Quiere terminar la estadia?: " + msg + " ", "CONFIRMACION",
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        
+                         do {
+                            String ci = JOptionPane.showInputDialog(this, "Ingrese su cedula para terminar el proceso");
+                            if (ci == null) {
+                                return;
+                            }
+                            if (!ci.matches("\\d+")) {
+                                JOptionPane.showMessageDialog(this, "La cédula de identidad debe ser numérica.");
+                            } else {
+                                Long i_ci = Long.parseLong(ci);
+                                
+                                break;
+                            }
+                        } while (true);
+                        
+                         
+ 
                     
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    } else {
+                        JOptionPane.showMessageDialog(this, "b");
+                        
+                    }
                     
                     break;
                 }
