@@ -660,19 +660,17 @@ public class Mainview extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Leer el estado cvs
         String csvFile = "Booking_hotel - estado.csv";
-        String csvFileH= "Booking_hotel - historico.csv";
-        
-        
+        String csvFileH = "Booking_hotel - historico.csv";
+
         String line;
-        
-        
+
         long tlf_c;
         long i_tlf;
-       
+
         // num_hab, primer_nombre, apellido, email, genero, celular, llegada Orden Estado
         try {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
-            BufferedReader br_h = new BufferedReader(new FileReader(csvFileH));
+            FileWriter fw = new FileWriter(csvFileH,true);
             //String line;
             br.readLine();
 
@@ -703,13 +701,13 @@ public class Mainview extends javax.swing.JFrame {
                 String date = values[6];
 
                 if (tlf_c == i_tlf) {
-                    String msg=name + " " + lastName+ " " + tlf + " " + mail + " " + " " + gender+ " " + tlf_c;
-                     // ci, primer_nombre, apellido, email, genero, llegada, num_hab - Orden historico 
-                     //JOptionPane.showMessageDialog(this, "¿Quiere terminar la estadia?: " + msg + " ");
+                    String msg = name + " " + lastName + " " + tlf + " " + mail + " " + " " + gender + " " + tlf_c;
+                    // ci, primer_nombre, apellido, email, genero, llegada, num_hab - Orden historico 
+                    //JOptionPane.showMessageDialog(this, "¿Quiere terminar la estadia?: " + msg + " ");
                     if (JOptionPane.showConfirmDialog(null, "¿Quiere terminar la estadia?: " + msg + " ", "CONFIRMACION",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        
-                         do {
+
+                        do {
                             String ci = JOptionPane.showInputDialog(this, "Ingrese su cedula para terminar el proceso");
                             if (ci == null) {
                                 return;
@@ -717,39 +715,19 @@ public class Mainview extends javax.swing.JFrame {
                             if (!ci.matches("\\d+")) {
                                 JOptionPane.showMessageDialog(this, "La cédula de identidad debe ser numérica.");
                             } else {
-                                Long i_ci = Long.parseLong(ci);
-                                
+                               // Long i_ci = Long.parseLong(ci);
+                               fw.append( "\r\n" +ci+","+name+","+lastName+","+mail+","+gender+","+date+","+num_hab);
+                               fw.close();
+                               loadData(tree);
                                 break;
                             }
                         } while (true);
-                        
-                         
- 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     } else {
                         JOptionPane.showMessageDialog(this, "b");
-                        
                     }
-                    
                     break;
                 }
-              
             }
-            
             br.close();
 
         } catch (IOException e) {
