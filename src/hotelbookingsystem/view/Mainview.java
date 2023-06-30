@@ -124,6 +124,26 @@ public class Mainview extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
+        pm("mm.wav");
+
+    }
+
+    public void pm(String location) {
+        String mp = location;
+        File music = new File(mp);
+        try {
+            if (music.exists()){
+            AudioInputStream ai = AudioSystem.getAudioInputStream(music);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ai);
+            clip.start();
+            }else{
+            
+            
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -739,20 +759,20 @@ public class Mainview extends javax.swing.JFrame {
                     if (!war) {
                         JOptionPane.showMessageDialog(this, "No hubo coincidicencias, verifique");
                         war = true;
-                        
+
                         File mp = new File(mm);
                         if (mp.exists()) {
 
                             try {
                                 AudioInputStream ai = AudioSystem.getAudioInputStream(mp);
-                                Clip clip= AudioSystem.getClip();
+                                Clip clip = AudioSystem.getClip();
                                 clip.open(ai);
                                 clip.start();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
-                        }else{
+                        } else {
                             System.out.println("a");
                         }
 
