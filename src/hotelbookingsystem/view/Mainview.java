@@ -672,6 +672,7 @@ public class Mainview extends javax.swing.JFrame {
         String line;
         long tlf_c;
         long i_tlf;
+        boolean war= false;
 
         try {
             
@@ -686,10 +687,7 @@ public class Mainview extends javax.swing.JFrame {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
             FileWriter fw = new FileWriter(csvFileH, true);
             
-            
-            
-            
-            
+
             br.readLine();
             do {
                 String tlfString = JOptionPane.showInputDialog(this, "Ingrese su numero telefonico");
@@ -740,9 +738,14 @@ public class Mainview extends javax.swing.JFrame {
                     }
                     
                 }else{
+                    if(!war){
+                        JOptionPane.showMessageDialog(this, "No hubo coincidicencias, verifique");
+                        war=true;
+                    }
                     tpw.println(line);
-                }  
-            }
+                }
+               
+            } 
             
             tpw.flush();
             tpw.close();
