@@ -796,7 +796,7 @@ public class Mainview extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-
+        customerdata.updateData();
     }//GEN-LAST:event_checkOutActionPerformed
 
     /**
