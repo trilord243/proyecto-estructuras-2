@@ -24,6 +24,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.Date;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -660,33 +663,28 @@ public class Mainview extends javax.swing.JFrame {
     private void checkOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutActionPerformed
 
         //Writers and readers
-        
         String csvFile = "Booking_hotel - estado.csv";
         String csvFileH = "Booking_hotel - historico.csv";
         String csvFileT = "temp.csv";
-        
-        File of= new File(csvFile);
-        File nf=new File(csvFileT);
-        
+        String mm = "rr.wav";
+
+        File of = new File(csvFile);
+        File nf = new File(csvFileT);
+
         //Variables de utilidad
         String line;
         long tlf_c;
         long i_tlf;
-        boolean war= false;
+        boolean war = false;
 
         try {
-            
-            
-            
-            
-            
-            FileWriter tfw= new FileWriter(csvFileT,true);
+
+            FileWriter tfw = new FileWriter(csvFileT, true);
             BufferedWriter tbw = new BufferedWriter(tfw);
-            PrintWriter tpw=new PrintWriter(tbw);
-            
+            PrintWriter tpw = new PrintWriter(tbw);
+
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
             FileWriter fw = new FileWriter(csvFileH, true);
-            
 
             br.readLine();
             do {
@@ -701,7 +699,7 @@ public class Mainview extends javax.swing.JFrame {
                     break;
                 }
             } while (true);
-            
+
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 String num_hab = values[0]; //Habitacion
@@ -712,9 +710,9 @@ public class Mainview extends javax.swing.JFrame {
                 String tlf = values[5].replace(".", "").replace("(", "").replace(")", "").replace(" ", "");
                 i_tlf = Long.parseLong(tlf);
                 String date = values[6];
-                
+
                 if (tlf_c == i_tlf) {
-                    if (JOptionPane.showConfirmDialog(null, "¿Quiere terminar la estadia?: " +name +" "+ lastName, "CONFIRMACION",
+                    if (JOptionPane.showConfirmDialog(null, "¿Quiere terminar la estadia?: " + name + " " + lastName, "CONFIRMACION",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         do {
                             String ci = JOptionPane.showInputDialog(this, "Ingrese su cedula para terminar el proceso");
@@ -732,27 +730,44 @@ public class Mainview extends javax.swing.JFrame {
                                 break;
                             }
                         } while (true);
-                        
+
                     } else {
                         JOptionPane.showMessageDialog(this, "Volviendo al menu");
                     }
-                    
-                }else{
-                    if(!war){
+
+                } else {
+                    if (!war) {
                         JOptionPane.showMessageDialog(this, "No hubo coincidicencias, verifique");
-                        war=true;
+                        war = true;
+                        
+                        File mp = new File(mm);
+                        if (mp.exists()) {
+
+                            try {
+                                AudioInputStream ai = AudioSystem.getAudioInputStream(mp);
+                                Clip clip= AudioSystem.getClip();
+                                clip.open(ai);
+                                clip.start();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }else{
+                            System.out.println("a");
+                        }
+
                     }
                     tpw.println(line);
                 }
-               
-            } 
-            
+
+            }
+
             tpw.flush();
             tpw.close();
             tbw.close();
             tfw.close();
             br.close();
-            
+
             of.delete();
             File nn = new File(csvFile);
             nf.renameTo(nn);
